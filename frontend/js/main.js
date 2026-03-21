@@ -68,11 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Register Service Worker for PWA
+  // Force clear stale PWA Service Workers to deploy the new OTP DOM logic
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('Service Worker registered', reg))
-      .catch(err => console.error('Service Worker not registered', err))
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for(let registration of registrations) {
+        registration.unregister()
+        console.log("Stale ServiceWorker purged for forced OTP UI deployment.")
+      }
+    })
   }
 })
 
@@ -179,7 +182,7 @@ if (document.getElementById('auth-form')) {
       }
     } catch (err) {
       console.error(err)
-      alert('Server error occurred')
+      alert('Internal App Error: ' + err.message + '\nStack: ' + err.stack)
     }
   })
 }

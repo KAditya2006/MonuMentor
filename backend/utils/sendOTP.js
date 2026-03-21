@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const https = require('https');
 
 // Initialize Transporter using Ethereal (Free Fake SMTP for testing) or Gmail if credentials exist
 let transporter;
@@ -36,13 +37,54 @@ initTransporter();
  * @param {string} otp 
  */
 async function dispatchDualChannelOTP(email, mobile, otp) {
-  // 1. MOBILE SMS MOCK DISPATCHER
+  // 1. MOBILE SMS DISPATCHER (TEXTBELT FREE PUBLIC API)
   console.log(`\n======================================================`);
-  console.log(`📲 [TWILIO SMS MOCK] Dispatching to Mobile: ${mobile}`);
-  console.log(`💬 Message: "Your Roots & Wings verification code is: ${otp}"`);
-  console.log(`======================================================\n`);
+  console.log(`📲 Attempting to send REAL SMS to Mobile: ${mobile} via Textbelt...`);
+  
+  const textbeltData = JSON.stringify({
+    phone: mobile,
+    message: `Your Roots & Wings verification code is: ${otp}`,
+    key: 'textbelt', // Grants 1 Free SMS per IP per Day
+  });
 
-  // 2. EMAIL DISPATCHER
+  const textbeltOptions = {
+    hostname: 'textbelt.com',
+    port: 443,
+    path: '/text',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(textbeltData)
+    }
+  };
+
+  const req = https.request(textbeltOptions, (res) => {
+    let body = '';
+    res.on('data', d => body += d);
+    res.on('end', () => {
+      try {
+        const result = JSON.parse(body);
+        if (result.success) {
+          console.log(`✅ [TEXTBELT] Successfully delivered real SMS to ${mobile}!!`);
+        } else {
+          console.log(`⚠️ [TEXTBELT FATAL] Free SMS Quota exceeded or failed: ${result.error}`);
+          console.log(`💬 Fallback Terminal Mock Message: "Your Roots & Wings verification code is: ${otp}"`);
+        }
+        console.log(`======================================================\n`);
+      } catch (e) {
+        console.log(`⚠️ [TEXTBELT PARSE ERROR] Failed to hit SMS API. Fallback Message: ${otp}\n======================================================\n`);
+      }
+    });
+  });
+
+  req.on('error', (e) => {
+    console.log(`⚠️ [TEXTBELT ERROR] ${e.message}. Fallback Message: ${otp}\n======================================================\n`);
+  });
+  
+  req.write(textbeltData);
+  req.end();
+
+  // 2. EMAIL DISPATCHER (ETHEREAL FREE PUBLIC API)
   try {
     if (!transporter) await initTransporter();
     let info = await transporter.sendMail({
