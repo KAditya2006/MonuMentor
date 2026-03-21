@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
     res.status(200).json({ msg: 'Registration secured. OTP dispatched to email and mobile.', pending: true })
   } catch (err) {
     console.error(err.message)
-    res.status(500).send('Server error')
+    res.status(500).json({ msg: err.message || 'Server error' })
   }
 })
 
@@ -128,7 +128,7 @@ router.post('/login', async (req, res) => {
     )
   } catch (err) {
     console.error(err.message)
-    res.status(500).send('Server error')
+    res.status(500).json({ msg: err.message || 'Server error' })
   }
 })
 
