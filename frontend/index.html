@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roots & Wings | AR Cultural Heritage Platform</title>
+  <meta name="description" content="Explore India's cultural heritage using 3D models and Augmented Reality.">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#FF9933">
+  <link rel="apple-touch-icon" href="https://via.placeholder.com/192/FF9933/FFFFFF?text=RW">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    .hero {
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(rgba(18,18,18,0.7), rgba(18,18,18,0.9)), url('https://images.pexels.com/photos/3579069/pexels-photo-3579069.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--primary-saffron), var(--primary-white), var(--primary-green));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Roots <span>&</span> Wings</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/explore" onclick="return requireAuth(event)">Explore</a></li>
+      <li><a href="/quiz" onclick="return requireAuth(event)">Quiz</a></li>
+      <li><a href="/chatbot" onclick="return requireAuth(event)">AI Assistant</a></li>
+    </ul>
+    <div class="nav-buttons" id="nav-auth-container">
+      <button class="btn btn-outline" onclick="openModal('login')">Login</button>
+      <button class="btn btn-primary" onclick="openModal('register')">Register</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container fade-up">
+      <h1>Discover India's Heritage</h1>
+      <p>Immersive 3D & AR Experiences of Iconic Monuments</p>
+      <div style="display: flex; gap: 1rem; justify-content: center;" class="stack-mobile">
+        <a href="/explore" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 2rem;" onclick="return requireAuth(event)">Start Exploring</a>
+        <a href="/chatbot" class="btn btn-outline" style="font-size: 1.2rem; padding: 1rem 2rem;" onclick="return requireAuth(event)">Ask AI Assistant</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-top: 4rem;">
+    <h2 class="text-center fade-up" style="font-size: 2.5rem;">Platform Features</h2>
+    <div class="features">
+      <div class="glass-card fade-up">
+        <h3 style="color: var(--primary-saffron)">3D Exploration</h3>
+        <p>Interact with highly detailed 3D models of famous Indian monuments from all angles.</p>
+      </div>
+      <div class="glass-card fade-up">
+        <h3 style="color: var(--primary-white)">AR Experience</h3>
+        <p>Bring the heritage into your room using WebXR Augmented Reality technology.</p>
+      </div>
+      <div class="glass-card fade-up">
+        <h3 style="color: var(--primary-green)">Cultural Quizzes</h3>
+        <p>Test your knowledge of Indian history, culture, and architecture and climb the leaderboard.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Mission Section -->
+  <section class="container" style="padding-top: 4rem;">
+    <div class="glass-card fade-up" style="display: flex; flex-direction: column; gap: 2rem; align-items: center; text-align: left; padding: 3rem;">
+      <div style="flex: 1;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary-white);">Our Mission</h2>
+        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8;">
+          Roots & Wings is built with the vision of preserving, digitizing, and celebrating India's incredibly diverse and rich cultural heritage. From the towering peaks of Buddhist stupas in Bihar to the intricate carvings of Dravidian temples in Tamil Nadu, our mission is to make history accessible to everyone, everywhere, using cutting-edge WebXR and AI technologies.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="container" style="padding-top: 4rem;">
+    <h2 class="text-center fade-up" style="font-size: 2.5rem; margin-bottom: 2rem;">How It Works</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+      <div class="fade-up">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🌍</div>
+        <h3 style="color: var(--primary-saffron);">1. Explore</h3>
+        <p style="color: var(--text-secondary);">Browse over 500+ Indian monuments categorized by state and architecture.</p>
+      </div>
+      <div class="fade-up">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+        <h3 style="color: var(--primary-white);">2. Visualize</h3>
+        <p style="color: var(--text-secondary);">View high-fidelity 3D models and project them into your room using AR.</p>
+      </div>
+      <div class="fade-up">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div>
+        <h3 style="color: var(--primary-green);">3. Learn & Test</h3>
+        <p style="color: var(--text-secondary);">Ask our AI assistant history questions and test your knowledge in the Quiz arena.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Heritage Section -->
+  <section class="container" style="padding-top: 5rem; padding-bottom: 4rem;">
+    <h2 class="text-center fade-up" style="font-size: 2.5rem; margin-bottom: 3rem;">Featured Heritage</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      
+      <!-- Taj Mahal -->
+      <div class="glass-card fade-up" style="padding: 0; overflow: hidden; border-radius: var(--radius-lg);"
+           onmouseenter="if(window.showHoverPreview) window.showHoverPreview(event, { _id: 'index_taj', name: 'Taj Mahal', city: 'Agra', state: 'Uttar Pradesh', images: ['https://images.pexels.com/photos/1603650/pexels-photo-1603650.jpeg?auto=compress&cs=tinysrgb&w=800'] })" 
+           onmouseleave="if(window.hideHoverPreview) window.hideHoverPreview()">
+        <img src="https://images.pexels.com/photos/1603650/pexels-photo-1603650.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Taj Mahal" style="width: 100%; height: 200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <span style="background: rgba(255,153,51,0.2); color: var(--primary-saffron); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">UNESCO Site</span>
+          <h3 style="margin-top: 1rem;">Taj Mahal</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Agra, Uttar Pradesh</p>
+          <a href="/explore" class="btn btn-outline" style="width: 100%; text-align: center; display: block;" onclick="return requireAuth(event)">View in AR</a>
+        </div>
+      </div>
+
+      <!-- Meenakshi Temple -->
+      <div class="glass-card fade-up" style="padding: 0; overflow: hidden; border-radius: var(--radius-lg);"
+           onmouseenter="if(window.showHoverPreview) window.showHoverPreview(event, { _id: 'index_meenakshi', name: 'Meenakshi Amman Temple', city: 'Madurai', state: 'Tamil Nadu', images: ['https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg/960px-An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg'] })" 
+           onmouseleave="if(window.hideHoverPreview) window.hideHoverPreview()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg/960px-An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg" alt="Meenakshi Temple" style="width: 100%; height: 200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <span style="background: rgba(19, 136, 8, 0.2); color: var(--primary-green); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Temple</span>
+          <h3 style="margin-top: 1rem;">Meenakshi Amman Temple</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Madurai, Tamil Nadu</p>
+          <a href="/explore" class="btn btn-outline" style="width: 100%; text-align: center; display: block;" onclick="return requireAuth(event)">View in AR</a>
+        </div>
+      </div>
+
+      <!-- Hawa Mahal -->
+      <div class="glass-card fade-up" style="padding: 0; overflow: hidden; border-radius: var(--radius-lg);"
+           onmouseenter="if(window.showHoverPreview) window.showHoverPreview(event, { _id: 'index_hawa', name: 'Hawa Mahal', city: 'Jaipur', state: 'Rajasthan', images: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg/960px-East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg'] })" 
+           onmouseleave="if(window.hideHoverPreview) window.hideHoverPreview()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg/960px-East_facade_Hawa_Mahal_Jaipur_from_ground_level_%28July_2022%29_-_img_01.jpg" alt="Hawa Mahal" style="width: 100%; height: 200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <span style="background: rgba(255,255,255,0.2); color: var(--primary-white); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Palace</span>
+          <h3 style="margin-top: 1rem;">Hawa Mahal</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Jaipur, Rajasthan</p>
+          <a href="/explore" class="btn btn-outline" style="width: 100%; text-align: center; display: block;" onclick="return requireAuth(event)">View in AR</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="container" style="padding-top: 5rem; padding-bottom: 4rem;">
+    <h2 class="text-center fade-up" style="font-size: 2.5rem; margin-bottom: 3rem;">What Explorers Say</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      <div class="glass-card fade-up">
+        <p style="color: var(--text-secondary); font-style: italic; margin-bottom: 1.5rem;">"The AR feature is absolutely mind-blowing. I was able to project the Ashoka Pillar right into my living room and walk around it in perfect scale!"</p>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-saffron); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">A</div>
+          <div>
+            <h4 style="margin: 0;">Aarav Sharma</h4>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">History Student</span>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card fade-up">
+        <p style="color: var(--text-secondary); font-style: italic; margin-bottom: 1.5rem;">"We used the Roots & Wings platform in our classroom. The massive quiz database combined with native language voice translation made learning effortless."</p>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-green); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">P</div>
+          <div>
+            <h4 style="margin: 0;">Priya Patel</h4>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Educator</span>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card fade-up">
+        <p style="color: var(--text-secondary); font-style: italic; margin-bottom: 1.5rem;">"Stunning 3D models! I've never seen such detail captured for the lesser-known temples in Odissa before this platform."</p>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-white); color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">K</div>
+          <div>
+            <h4 style="margin: 0;">Kavya Reddy</h4>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Architect</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="container" style="padding-top: 4rem; padding-bottom: 5rem;">
+    <h2 class="text-center fade-up" style="font-size: 2.5rem; margin-bottom: 3rem;">Frequently Asked Questions</h2>
+    <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+      <div class="glass-card fade-up" style="padding: 1.5rem;">
+        <h3 style="margin-bottom: 0.5rem; color: var(--primary-saffron); font-size: 1.2rem;">Do I need to download an app to use AR?</h3>
+        <p style="color: var(--text-secondary); margin: 0;">No! Roots & Wings operates entirely in your browser using WebXR. As long as you have a modern smartphone with a compatible browser like Chrome or Safari, you can project monuments instantly.</p>
+      </div>
+      <div class="glass-card fade-up" style="padding: 1.5rem;">
+        <h3 style="margin-bottom: 0.5rem; color: var(--primary-white); font-size: 1.2rem;">How many languages are supported?</h3>
+        <p style="color: var(--text-secondary); margin: 0;">The platform supports over 10 major Indian languages including Hindi, Tamil, Telugu, and Bengali. Our native voice engine can both understand your commands and read out descriptions flawlessly.</p>
+      </div>
+      <div class="glass-card fade-up" style="padding: 1.5rem;">
+        <h3 style="margin-bottom: 0.5rem; color: var(--primary-green); font-size: 1.2rem;">Is this platform free to use?</h3>
+        <p style="color: var(--text-secondary); margin: 0;">Absolutely. Roots & Wings is an open-access platform dedicated to digitizing and providing free educational access to Indian cultural heritage for everyone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2 id="modal-title" style="margin-bottom: 2rem; text-align: center;">Login</h2>
+      <form id="auth-form">
+        <div id="auth-primary-stage">
+          <div class="form-group" id="username-group" style="display: none;">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter username">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" required placeholder="Enter email">
+          </div>
+          <div class="form-group" id="mobile-group" style="display: none;">
+            <label>Mobile Number (For Dual-Channel Verification)</label>
+            <input type="tel" id="mobile" placeholder="Enter 10-digit Mobile">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" required placeholder="Enter password">
+          </div>
+        </div>
+        
+        <div id="auth-otp-stage" style="display: none;">
+          <p style="color: var(--primary-saffron); text-align: center; margin-bottom: 1rem;">Verification codes sent to your Email and Mobile via SMS!</p>
+          <div class="form-group">
+            <label>Enter 6-Digit OTP</label>
+            <input type="text" id="otp-input" placeholder="000000" maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="submit-btn">Login</button>
+      </form>
+      <div class="toggle-auth">
+        <p id="toggle-text">Don't have an account? <span onclick="toggleAuthMode()">Register</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Platform Statistics Section -->
+  <section class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+    <div class="glass-card fade-up" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center; border-color: var(--primary-saffron);">
+      <div>
+        <h3 style="font-size: 3rem; color: var(--primary-saffron); margin-bottom: 0.5rem;">500+</h3>
+        <p style="color: var(--text-secondary);">3D Monuments</p>
+      </div>
+      <div>
+        <h3 style="font-size: 3rem; color: var(--primary-white); margin-bottom: 0.5rem;">2.8k+</h3>
+        <p style="color: var(--text-secondary);">Quiz Questions</p>
+      </div>
+      <div>
+        <h3 style="font-size: 3rem; color: var(--primary-green); margin-bottom: 0.5rem;">10+</h3>
+        <p style="color: var(--text-secondary);">Native Languages</p>
+      </div>
+      <div>
+        <h3 style="font-size: 3rem; color: var(--primary-saffron); margin-bottom: 0.5rem;">∞</h3>
+        <p style="color: var(--text-secondary);">AR Experiences</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action / Newsletter -->
+  <section class="container fade-up" style="padding-bottom: 5rem; text-align: center;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Stay Updated</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 2rem;">Join our newsletter to get updates on new 3D AR monuments added weekly.</p>
+    <div style="display: flex; gap: 1rem; max-width: 500px; margin: 0 auto;" class="stack-mobile">
+      <input type="email" placeholder="Enter your email address" style="flex: 1; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: white;">
+      <button class="btn btn-primary" style="padding: 1rem 2rem;">Subscribe</button>
+    </div>
+  </section>
+
+  <footer style="background: rgba(0,0,0,0.3); padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem;">
+    <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+      <div>
+        <div class="logo" style="font-size: 1.5rem; margin-bottom: 1rem;">Roots <span style="color: var(--primary-saffron);">&</span> Wings</div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">Preserving India's magnificent cultural heritage through Augmented Reality and cutting-edge 3D technology.</p>
+      </div>
+      <div>
+        <h4 style="color: var(--primary-white); margin-bottom: 1rem;">Quick Links</h4>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="/explore" onclick="return requireAuth(event)" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-saffron)'" onmouseout="this.style.color='var(--text-secondary)'">Explore AR Models</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/quiz" onclick="return requireAuth(event)" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-saffron)'" onmouseout="this.style.color='var(--text-secondary)'">Cultural Quizzes</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="/chatbot" onclick="return requireAuth(event)" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-saffron)'" onmouseout="this.style.color='var(--text-secondary)'">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: var(--primary-white); margin-bottom: 1rem;">Resources</h4>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-white)'" onmouseout="this.style.color='var(--text-secondary)'">Privacy Policy</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-white)'" onmouseout="this.style.color='var(--text-secondary)'">Terms of Service</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-white)'" onmouseout="this.style.color='var(--text-secondary)'">FAQ & Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: var(--primary-white); margin-bottom: 1rem;">Connect</h4>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-green)'" onmouseout="this.style.color='var(--text-secondary)'">GitHub Repository</a></li>
+          <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='var(--primary-green)'" onmouseout="this.style.color='var(--text-secondary)'">Contact Team</a></li>
+        </ul>
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <a href="#" style="font-size: 1.5rem; text-decoration: none;">🐦</a>
+          <a href="#" style="font-size: 1.5rem; text-decoration: none;">📸</a>
+          <a href="#" style="font-size: 1.5rem; text-decoration: none;">📘</a>
+          <a href="#" style="font-size: 1.5rem; text-decoration: none;">💼</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05);">
+      <p>&copy; 2026 Roots & Wings. All rights reserved. Built with <span style="color: #ff4757;">❤️</span> for Bharat.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/voice.js"></script>
+</body>
+</html>

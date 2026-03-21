@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Monuments | Roots & Wings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <style>
+    .explore-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    @media(min-width: 768px) {
+      .explore-layout {
+        grid-template-columns: 300px 1fr;
+      }
+    }
+    
+    .filters {
+      padding: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+    
+    .filter-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    select, input[type="text"] {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+    }
+    
+    select option {
+      background: var(--dark-surface);
+      color: white;
+    }
+    
+    #map {
+      height: 400px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 2rem;
+      z-index: 1;
+      border: 2px solid var(--primary-saffron);
+    }
+    
+    .monuments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .monument-card {
+      background: var(--dark-surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .monument-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-saffron);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    
+    .card-img {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      background: #333;
+    }
+    
+    .card-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+      background: rgba(19, 136, 8, 0.2);
+      color: var(--primary-green);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Roots <span>&</span> Wings</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/explore">Explore</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/chatbot">AI Assistant</a></li>
+    </ul>
+    <div class="nav-buttons" id="nav-auth-container"></div>
+  </nav>
+
+  <div class="container">
+    <h1 style="color:var(--primary-saffron)">Explore India's Heritage</h1>
+    <p style="color:var(--text-secondary);margin-bottom:2rem;">Discover monuments state by state, or use our interactive map.</p>
+    
+    <div class="explore-layout">
+      <!-- Filters -->
+      <aside class="filters glass-card">
+        <h3>Filters</h3>
+        
+        <div class="filter-group mt-1">
+          <label>Search</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="search-input" placeholder="Name or city..." list="monument-suggestions" autocomplete="off" style="flex:1;">
+            <button id="mic-btn" class="btn btn-outline" onclick="startVoiceInput('search-input', applyFilters)" style="padding:0.8rem; display:flex; align-items:center; justify-content:center; cursor:pointer;" title="Search by Voice">🎤</button>
+          </div>
+          <datalist id="monument-suggestions"></datalist>
+        </div>
+        
+        <div class="filter-group">
+          <label>State</label>
+          <select id="state-select">
+            <option value="">All States</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+            <option value="Ladakh">Ladakh</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="Puducherry">Puducherry</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>Category</label>
+          <select id="category-select">
+            <option value="">All Categories</option>
+            <option value="Temples">Temples</option>
+            <option value="Forts">Forts</option>
+            <option value="Palaces">Palaces</option>
+            <option value="Caves">Caves</option>
+            <option value="UNESCO Sites">UNESCO Sites</option>
+          </select>
+        </div>
+        
+        <button class="btn btn-primary" style="width:100%" onclick="applyFilters()">Apply Filters</button>
+      </aside>
+
+      <!-- Main Content -->
+      <main>
+        <div id="map"></div>
+        <div class="monuments-grid" id="monuments-container">
+          <p>Loading monuments...</p>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/explore.js"></script>
+  <script src="/js/voice.js"></script>
+</body>
+</html>

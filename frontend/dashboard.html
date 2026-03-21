@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard | Roots & Wings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media(min-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .stat-card {
+      text-align: center;
+      padding: 2rem;
+    }
+    .stat-card h2 {
+      font-size: 3rem;
+      color: var(--primary-saffron);
+      margin: 1rem 0;
+    }
+    .lists-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media(min-width: 768px) {
+      .lists-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .monument-list {
+      list-style: none;
+      padding: 0;
+    }
+    .monument-list li {
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius-md);
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .monument-list li a {
+      color: var(--primary-blue);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Roots <span>&</span> Wings</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/explore">Explore</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/chatbot">AI Assistant</a></li>
+    </ul>
+    <div class="nav-buttons" id="nav-auth-container"></div>
+  </nav>
+
+  <div class="container fade-up">
+    <h1>Welcome, <span id="user-name" style="color:var(--primary-saffron)">User</span>!</h1>
+    <p style="color:var(--text-secondary)">Track your exploration and learning progress.</p>
+    
+    <div class="dashboard-grid">
+      <div class="stat-card glass-card">
+        <h3>Total Quiz Score</h3>
+        <h2 id="total-score">0</h2>
+        <p>Keep taking quizzes to increase your score!</p>
+      </div>
+      
+      <div class="glass-card" style="padding: 1rem;">
+        <h3 style="text-align:center;margin-bottom:1rem;">Activity Breakdown</h3>
+        <canvas id="progressChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="lists-grid">
+      <div class="glass-card">
+        <h3 style="margin-bottom: 1rem; color:var(--primary-green)">Visited Monuments (<span id="visited-count">0</span>)</h3>
+        <ul class="monument-list" id="visited-list">
+          <li>Loading...</li>
+        </ul>
+      </div>
+      
+      <div class="glass-card">
+        <h3 style="margin-bottom: 1rem; color: #ff5252">Favorite Monuments (<span id="fav-count">0</span>)</h3>
+        <ul class="monument-list" id="fav-list">
+          <li>Loading...</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/voice.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

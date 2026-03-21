@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cultural Quiz | Roots & Wings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .quiz-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+    .question-box {
+      margin-bottom: 2rem;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .option-btn {
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-md);
+      color: white;
+      text-align: left;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+    .option-btn:hover {
+      background: rgba(255,153,51,0.2);
+      border-color: var(--primary-saffron);
+    }
+    .option-btn.selected {
+      background: var(--primary-saffron);
+      border-color: var(--primary-saffron);
+    }
+    .option-btn.correct {
+      background: var(--primary-green);
+      border-color: var(--primary-green);
+    }
+    .option-btn.wrong {
+      background: #d32f2f;
+      border-color: #d32f2f;
+    }
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    #quiz-setup, #quiz-results {
+      text-align: center;
+    }
+    .timer {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-saffron);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Roots <span>&</span> Wings</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/explore">Explore</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/chatbot">AI Assistant</a></li>
+    </ul>
+    <div class="nav-buttons" id="nav-auth-container"></div>
+  </nav>
+
+  <div class="container quiz-container glass-card">
+    
+    <div id="quiz-setup">
+      <h2 style="color:var(--primary-saffron);">Test Your Cultural Knowledge</h2>
+      <p style="margin-bottom:2rem;color:var(--text-secondary);">Select a category and challenge yourself.</p>
+      
+      <select id="quiz-category" style="max-width:300px;margin-bottom:1.5rem;display:inline-block;">
+        <option value="">Mixed Category</option>
+        <option value="Monuments">Monuments</option>
+        <option value="Indian History">Indian History</option>
+        <option value="Culture">Culture</option>
+      </select>
+      
+      <br>
+      <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div id="quiz-active" style="display:none;">
+      <div class="quiz-header">
+        <div>Question <span id="q-current">1</span>/<span id="q-total">10</span></div>
+        <div class="timer">Time: <span id="timer-display">30</span>s</div>
+      </div>
+      
+      <div class="question-box">
+        <h3 id="question-text">Loading question...</h3>
+      </div>
+      
+      <div class="options-grid" id="options-container">
+      </div>
+      
+      <div style="margin-top: 2rem; text-align: right;">
+        <button class="btn btn-primary" id="next-btn" style="display:none;" onclick="nextQuestion()">Next Question</button>
+      </div>
+    </div>
+
+    <div id="quiz-results" style="display:none;">
+      <h2>Quiz Completed!</h2>
+      <div style="font-size:4rem;color:var(--primary-saffron);margin:1rem 0;" id="final-score">0</div>
+      <p style="margin-bottom:2rem;">Questions correct out of <span id="r-total">10</span></p>
+      <button class="btn btn-outline" onclick="location.reload()">Play Again</button>
+      <a href="/dashboard" class="btn btn-primary">View Dashboard</a>
+    </div>
+
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/voice.js"></script>
+  <script src="/js/quiz.js"></script>
+</body>
+</html>

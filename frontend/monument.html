@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monument Details | Roots & Wings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <!-- A-Frame for 3D and WebXR AR -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <!-- Orbit Controls for A-Frame -->
+  <script src="https://unpkg.com/aframe-orbit-controls@1.3.0/dist/aframe-orbit-controls.min.js"></script>
+  
+  <style>
+    .monument-header {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 768px) {
+      .monument-header {
+        flex-direction: column-reverse; /* image on top usually looks better, but wait, normal column is fine */
+        flex-direction: column;
+      }
+    }
+    .monument-info {
+      flex: 1;
+    }
+    .monument-image-wrapper {
+      flex: 1;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      max-height: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .monument-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .ar-container {
+      width: 100%;
+      height: 60vh;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 2rem;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: #000;
+    }
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .detail-item {
+      background: var(--dark-surface);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--primary-saffron);
+    }
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      z-index: 100;
+      transition: opacity 0.3s;
+    }
+    #monument-content {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Roots <span>&</span> Wings</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/explore">Explore</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+      <li><a href="/chatbot">AI Assistant</a></li>
+    </ul>
+    <div class="nav-buttons" id="nav-auth-container"></div>
+  </nav>
+
+  <div class="container" id="loading">Loading Monument Details...</div>
+
+  <div class="container fade-up" id="monument-content">
+    <div class="monument-header">
+      <div class="monument-info">
+        <span class="badge" id="m-category" style="background: rgba(255,153,51,0.2); color: var(--primary-saffron)"></span>
+        <h1 id="m-name" style="font-size: 3rem;"></h1>
+        <p style="color: var(--text-secondary); font-size: 1.2rem;" id="m-location"></p>
+        
+        <div style="display:flex; align-items:flex-start; gap: 1rem; margin-top: 1.5rem;">
+          <button id="speaker-btn" class="btn btn-outline" onclick="speakText('m-description')" style="padding:0.5rem 1rem; border-radius: 5px; cursor:pointer;" title="Listen to Description">🔊 Listen</button>
+          <p id="m-description" style="margin: 0; flex: 1; line-height: 1.6;"></p>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="btn btn-outline" onclick="toggleFavorite()">❤️ Add to Favorites</button>
+          <button class="btn btn-outline" onclick="markVisited()">📍 Mark as Visited</button>
+        </div>
+      </div>
+      <div class="monument-image-wrapper">
+        <img id="m-image" src="https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=800" alt="Monument Image">
+      </div>
+    </div>
+
+    <!-- 3D / AR Viewer -->
+    <h2 style="margin-top: 3rem;">Interactive 3D & AR Viewer</h2>
+    <p style="color: var(--text-secondary);">Drag to rotate. Scroll to zoom. Use the WebXR button in the bottom right for AR mode.</p>
+    <div class="ar-container">
+      <a-scene embedded xr-mode-ui="enabled: true">
+        <a-assets>
+          <a-asset-item id="monument-model" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Fox/glTF/Fox.gltf"></a-asset-item>
+        </a-assets>
+        
+        <!-- Light -->
+        <a-light type="ambient" color="#ffffff" intensity="0.6"></a-light>
+        <a-light type="directional" color="#ffffff" intensity="0.8" position="-1 2 1"></a-light>
+        
+        <!-- Camera and Controls -->
+        <!-- aframe-orbit-controls needs target, distance -->
+        <a-entity camera look-controls orbit-controls="target: 0 0 0; minDistance: 1; maxDistance: 15; initialPosition: 0 2 5"></a-entity>
+        
+        <!-- Model -->
+        <a-entity id="model-entity" gltf-model="#monument-model" position="0 0 0" scale="0.1 0.1 0.1" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"></a-entity>
+      </a-scene>
+    </div>
+
+    <!-- Additional Details -->
+    <div class="details-grid">
+      <div class="detail-item">
+        <h4 style="color:var(--text-secondary)">Built In</h4>
+        <p id="m-year"></p>
+      </div>
+      <div class="detail-item">
+        <h4 style="color:var(--text-secondary)">Architecture Style</h4>
+        <p id="m-style"></p>
+      </div>
+      <div class="detail-item">
+        <h4 style="color:var(--text-secondary)">UNESCO Status</h4>
+        <p id="m-unesco"></p>
+      </div>
+    </div>
+
+    <div style="margin-top: 3rem; margin-bottom: 5rem;">
+      <h3>Historical Context</h3>
+      <p id="m-history" style="white-space: pre-wrap; margin-top: 1rem; color: var(--text-secondary);"></p>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/three-viewer.js"></script>
+  <script src="/js/voice.js"></script>
+</body>
+</html>
