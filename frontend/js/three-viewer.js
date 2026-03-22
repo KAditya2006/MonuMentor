@@ -42,19 +42,35 @@ function populateUI (mon) {
   document.getElementById('m-location').innerText = `${mon.city}, ${mon.state}`
   document.getElementById('m-description').innerText = mon.description || 'Description not available.'
 
-  if (mon.images && mon.images.length > 0) {
-    document.getElementById('m-image').src = mon.images[0]
+  // Load High-Res Primary Billboard Image to prevent any blur
+  const defaultBg = 'https://images.unsplash.com/photo-1548013146-72479768bada?q=100&w=2048'
+  let targetImage = mon.images && mon.images.length > 0 ? mon.images[0] : defaultBg
+  
+  // Force unsplash URLs to use high-res rendering by injecting the width param if missing
+  if (targetImage.includes('unsplash.com') && !targetImage.includes('w=')) {
+     targetImage += '&w=2048&q=100';
+  } else if (targetImage.includes('unsplash.com')) {
+     targetImage = targetImage.replace(/w=\d+/, 'w=2048').replace(/q=\d+/, 'q=100');
   }
 
-  document.getElementById('m-year').innerText = mon.yearBuilt || 'Unknown'
-  document.getElementById('m-style').innerText = mon.architectureStyle || 'N/A'
-  document.getElementById('m-unesco').innerText = mon.UNESCOstatus ? 'Recognized' : 'None'
-  document.getElementById('m-history').innerText = mon.history || 'History info not available.'
+  // Load Genuine 3D Architectural Structure (GLTF/GLB)
+  const modelEntity = document.getElementById('model-entity');
+  if (modelEntity) {
+    // If database lacks the structural 3D file, fallback to a generic antique artifact (Lantern) instead of Fox
+    const targetModel = mon.modelUrl || 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Lantern/glTF/Lantern.gltf';
+    
+    // Auto-scale generic models appropriately
+    const scale = mon.modelUrl ? "1 1 1" : "0.05 0.05 0.05"; 
+    modelEntity.setAttribute('scale', scale);
+    modelEntity.setAttribute('gltf-model', `url(${targetModel})`);
+  }
 
-  // Update 3D model
-  const modelUrl = mon.modelUrl || 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Fox/glTF/Fox.gltf'
-
-  document.getElementById('model-entity').setAttribute('gltf-model', modelUrl)
+  // Execute True Satellite Reality View (Crisp Native Zoom)
+  const satelliteFrame = document.getElementById('satellite-iframe');
+  if (satelliteFrame) {
+    const encodedQuery = encodeURIComponent(mon.name + " " + mon.city);
+    satelliteFrame.src = `https://maps.google.com/maps?q=${encodedQuery}&t=k&z=18&output=embed`;
+  }
 }
 
 // User Actions

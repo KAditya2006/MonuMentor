@@ -37,52 +37,62 @@ initTransporter();
  * @param {string} otp 
  */
 async function dispatchDualChannelOTP(email, mobile, otp) {
-  // 1. MOBILE SMS DISPATCHER (TEXTBELT FREE PUBLIC API)
+  // 1. MOBILE SMS DISPATCHER (FAST2SMS API)
   console.log(`\n======================================================`);
-  console.log(`📲 Attempting to send REAL SMS to Mobile: ${mobile} via Textbelt...`);
-  
-  const textbeltData = JSON.stringify({
-    phone: mobile,
-    message: `Your Roots & Wings verification code is: ${otp}`,
-    key: 'textbelt', // Grants 1 Free SMS per IP per Day
-  });
+  const fast2smsKey = process.env.FAST2SMS_API_KEY;
 
-  const textbeltOptions = {
-    hostname: 'textbelt.com',
-    port: 443,
-    path: '/text',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(textbeltData)
-    }
-  };
+  if (!fast2smsKey) {
+     console.log(`⚠️ [FAST2SMS] API Key is missing! Add FAST2SMS_API_KEY to your .env file.`);
+     console.log(`💬 Fallback Terminal Mock Message: "Your Roots & Wings verification code is: ${otp}"`);
+     console.log(`======================================================\n`);
+  } else {
+     console.log(`📲 [FAST2SMS] Attempting to deliver REAL SMS to Mobile: ${mobile}...`);
 
-  const req = https.request(textbeltOptions, (res) => {
-    let body = '';
-    res.on('data', d => body += d);
-    res.on('end', () => {
-      try {
-        const result = JSON.parse(body);
-        if (result.success) {
-          console.log(`✅ [TEXTBELT] Successfully delivered real SMS to ${mobile}!!`);
-        } else {
-          console.log(`⚠️ [TEXTBELT FATAL] Free SMS Quota exceeded or failed: ${result.error}`);
-          console.log(`💬 Fallback Terminal Mock Message: "Your Roots & Wings verification code is: ${otp}"`);
-        }
-        console.log(`======================================================\n`);
-      } catch (e) {
-        console.log(`⚠️ [TEXTBELT PARSE ERROR] Failed to hit SMS API. Fallback Message: ${otp}\n======================================================\n`);
-      }
-    });
-  });
+     const fast2smsData = JSON.stringify({
+       route: 'q',
+       message: `Your Roots & Wings Registration OTP is: ${otp}. Do not share this code with anyone.`,
+       flash: 0,
+       numbers: mobile
+     });
 
-  req.on('error', (e) => {
-    console.log(`⚠️ [TEXTBELT ERROR] ${e.message}. Fallback Message: ${otp}\n======================================================\n`);
-  });
-  
-  req.write(textbeltData);
-  req.end();
+     const fast2smsOptions = {
+       hostname: 'www.fast2sms.com',
+       port: 443,
+       path: '/dev/bulkV2',
+       method: 'POST',
+       headers: {
+         'authorization': fast2smsKey,
+         'Content-Type': 'application/json',
+         'Content-Length': Buffer.byteLength(fast2smsData)
+       }
+     };
+
+     const req = https.request(fast2smsOptions, (res) => {
+       let body = '';
+       res.on('data', d => body += d);
+       res.on('end', () => {
+         try {
+           const result = JSON.parse(body);
+           if (result.return === true) {
+             console.log(`✅ [FAST2SMS] Live OTP Successfully Delivered to ${mobile}!!`);
+           } else {
+             console.log(`⚠️ [FAST2SMS REJECTED] ${result.message}`);
+             console.log(`💬 Fallback Terminal Message: ${otp}`);
+           }
+           console.log(`======================================================\n`);
+         } catch (e) {
+           console.log(`⚠️ [FAST2SMS ERR] Parse failure. Fallback OTP is: ${otp}\n======================================================\n`);
+         }
+       });
+     });
+
+     req.on('error', (e) => {
+       console.log(`⚠️ [FAST2SMS NETWORK ERR] ${e.message}. Fallback OTP is: ${otp}\n======================================================\n`);
+     });
+     
+     req.write(fast2smsData);
+     req.end();
+  }
 
   // 2. EMAIL DISPATCHER (ETHEREAL FREE PUBLIC API)
   try {

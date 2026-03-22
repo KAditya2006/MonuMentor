@@ -37,7 +37,8 @@
     .monument-image-wrapper img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: #111;
     }
     .action-buttons {
       display: flex;
@@ -120,25 +121,43 @@
     </div>
 
     <!-- 3D / AR Viewer -->
-    <h2 style="margin-top: 3rem;">Interactive 3D & AR Viewer</h2>
-    <p style="color: var(--text-secondary);">Drag to rotate. Scroll to zoom. Use the WebXR button in the bottom right for AR mode.</p>
+    <h2 style="margin-top: 3rem;">Interactive 3D AR Model</h2>
+    <p style="color: var(--text-secondary);">Drag to rotate. Scroll to zoom. The monument's photograph is translated into an interactive 3D box geometry.</p>
     <div class="ar-container">
       <a-scene embedded xr-mode-ui="enabled: true">
-        <a-assets>
-          <a-asset-item id="monument-model" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Fox/glTF/Fox.gltf"></a-asset-item>
-        </a-assets>
-        
         <!-- Light -->
-        <a-light type="ambient" color="#ffffff" intensity="0.6"></a-light>
-        <a-light type="directional" color="#ffffff" intensity="0.8" position="-1 2 1"></a-light>
+        <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
+        <a-light type="directional" color="#ffffff" intensity="1" position="-1 2 1"></a-light>
         
-        <!-- Camera and Controls -->
-        <!-- aframe-orbit-controls needs target, distance -->
-        <a-entity camera look-controls orbit-controls="target: 0 0 0; minDistance: 1; maxDistance: 15; initialPosition: 0 2 5"></a-entity>
+        <!-- Camera and Controls (Top-Down Orbital Angle) -->
+        <a-entity camera orbit-controls="target: 0 0.5 0; minDistance: 2; maxDistance: 25; initialPosition: 0 5 8"></a-entity>
         
-        <!-- Model -->
-        <a-entity id="model-entity" gltf-model="#monument-model" position="0 0 0" scale="0.1 0.1 0.1" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"></a-entity>
+        <!-- Native 3D Structural Asset Loader -->
+        <a-entity id="model-entity" position="0 0 0" scale="0.1 0.1 0.1" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"></a-entity>
       </a-scene>
+    </div>
+
+    <!-- Interactive Satellite Reality Viewer -->
+    <div class="location-panel glass-card" style="margin-top: 3rem; padding: 2rem; border: 1px solid rgba(255,255,255,0.05);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <h2 style="margin-top: 0;">📍 Live Satellite Location</h2>
+        <span class="badge" style="background: rgba(51, 153, 255, 0.2); color: #3399ff; margin: 0;">Real-Time Geographic Tracking</span>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 2rem;">Drag to pan the camera around the actual geographic perimeter of the monument from outer space! (Maximum Spatial Zoom Enabled)</p>
+      
+      <div class="ar-container" style="margin-top: 0; box-shadow: 0 20px 50px rgba(0,0,0,0.6); border-radius: var(--radius-lg); overflow: hidden; border: 2px solid rgba(255,255,255,0.1);">
+         <iframe 
+            id="satellite-iframe"
+            width="100%" 
+            height="100%" 
+            frameborder="0" 
+            scrolling="no" 
+            marginheight="0" 
+            marginwidth="0" 
+            src="https://maps.google.com/maps?q=Taj+Mahal&t=k&z=18&output=embed"
+            style="border:0;">
+         </iframe>
+      </div>
     </div>
 
     <!-- Additional Details -->

@@ -2,6 +2,45 @@
 let authMode = 'login' // 'login' or 'register'
 const API_URL = '/api'
 
+// --- Custom Toast Notification ---
+function showToast(message, type = 'info') {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  
+  let icon = '💬';
+  if (type === 'success') icon = '✅';
+  if (type === 'error') icon = '🚨';
+
+  toast.innerHTML = `<span class="toast-icon">${icon}</span> <span class="toast-message">${message}</span>`;
+  container.appendChild(toast);
+
+  // Trigger reflow for animation
+  setTimeout(() => {
+    toast.classList.add('toast-show');
+  }, 10);
+
+  // Auto remove
+  setTimeout(() => {
+    toast.classList.remove('toast-show');
+    setTimeout(() => {
+      toast.remove();
+    }, 500);
+  }, 4500);
+}
+
+// Global Alert Override
+window.alert = function(msg) {
+  showToast(msg, 'info');
+}
+
 // GSAP Animations and Responsive Navbar
 document.addEventListener('DOMContentLoaded', () => {
   // Dynamically Inject Hamburger Menu for Mobile
@@ -98,38 +137,22 @@ function toggleAuthMode () {
 function updateModalUI () {
   const title = document.getElementById('modal-title')
   const userGroup = document.getElementById('username-group')
-  const mobileGroup = document.getElementById('mobile-group')
   const usernameInput = document.getElementById('username')
-  const mobileInput = document.getElementById('mobile')
   const submitBtn = document.getElementById('submit-btn')
   const toggleText = document.getElementById('toggle-text')
-
-  // Reset states
-  document.getElementById('auth-primary-stage').style.display = 'block'
-  document.getElementById('auth-otp-stage').style.display = 'none'
 
   if (authMode === 'login') {
     title.innerText = 'Login'
     userGroup.style.display = 'none'
-    mobileGroup.style.display = 'none'
     usernameInput.removeAttribute('required')
-    mobileInput.removeAttribute('required')
     submitBtn.innerText = 'Login'
     toggleText.innerHTML = 'Don\'t have an account? <span onclick="toggleAuthMode()" style="color:var(--primary-saffron);cursor:pointer;">Register</span>'
   } else if (authMode === 'register') {
     title.innerText = 'Register'
     userGroup.style.display = 'block'
-    mobileGroup.style.display = 'block'
     usernameInput.setAttribute('required', 'true')
-    mobileInput.setAttribute('required', 'true')
     submitBtn.innerText = 'Register'
     toggleText.innerHTML = 'Already have an account? <span onclick="toggleAuthMode()" style="color:var(--primary-saffron);cursor:pointer;">Login</span>'
-  } else if (authMode === 'otp') {
-    title.innerText = 'Enter Verification Code'
-    document.getElementById('auth-primary-stage').style.display = 'none'
-    document.getElementById('auth-otp-stage').style.display = 'block'
-    submitBtn.innerText = 'Verify & Login'
-    toggleText.innerHTML = '' // Hide toggle during OTP
   }
 }
 
@@ -141,19 +164,9 @@ if (document.getElementById('auth-form')) {
     const email = document.getElementById('email').value
     const password = document.getElementById('password').value
     const username = document.getElementById('username')?.value
-    const mobile = document.getElementById('mobile')?.value
-    const otp = document.getElementById('otp-input')?.value
 
-    let endpoint = '/auth/login'
-    let body = { email, password }
-
-    if (authMode === 'register') {
-      endpoint = '/auth/register'
-      body = { username, email, mobile, password }
-    } else if (authMode === 'otp') {
-      endpoint = '/auth/verify-otp'
-      body = { email, otp }
-    }
+    const endpoint = authMode === 'login' ? '/auth/login' : '/auth/register'
+    const body = authMode === 'login' ? { email, password } : { username, email, password }
 
     try {
       const res = await fetch(`${API_URL}${endpoint}`, {
@@ -164,25 +177,17 @@ if (document.getElementById('auth-form')) {
 
       const data = await res.json()
       if (res.ok) {
-        if (data.pending) {
-           // Successfully generated OTP, switch UI state
-           authMode = 'otp'
-           updateModalUI()
-           return;
-        }
-
-        // Issued final JWT token
         localStorage.setItem('token', data.token)
         localStorage.setItem('user', JSON.stringify(data.user))
         closeModal()
         checkAuth()
-        alert('Authentication successful!')
+        showToast('Authentication successful! Welcome to the AR Platform.', 'success')
       } else {
-        alert(data.msg || 'Authentication failed')
+        showToast(data.msg || 'Authentication failed', 'error')
       }
     } catch (err) {
       console.error(err)
-      alert('Internal App Error: ' + err.message + '\nStack: ' + err.stack)
+      showToast('Internal App Error: ' + err.message, 'error')
     }
   })
 }
