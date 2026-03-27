@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://monumentor-dgpy.onrender.com/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://monumentor-dgpy.onrender.com/index.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://monumentor-dgpy.onrender.com/chatbot.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://monumentor-dgpy.onrender.com/dashboard.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://monumentor-dgpy.onrender.com/explore.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://monumentor-dgpy.onrender.com/monument.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://monumentor-dgpy.onrender.com/quiz.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
