@@ -164,9 +164,15 @@ if (document.getElementById('auth-form')) {
     const email = document.getElementById('email').value
     const password = document.getElementById('password').value
     const username = document.getElementById('username')?.value
+    const submitBtn = document.getElementById('submit-btn')
 
     const endpoint = authMode === 'login' ? '/auth/login' : '/auth/register'
     const body = authMode === 'login' ? { email, password } : { username, email, password }
+
+    // Show loading state
+    const originalText = submitBtn.innerText
+    submitBtn.disabled = true
+    submitBtn.innerText = 'Please wait...'
 
     try {
       const res = await fetch(`${API_URL}${endpoint}`, {
@@ -176,6 +182,7 @@ if (document.getElementById('auth-form')) {
       })
 
       const data = await res.json()
+      
       if (res.ok) {
         localStorage.setItem('token', data.token)
         localStorage.setItem('user', JSON.stringify(data.user))
@@ -183,11 +190,20 @@ if (document.getElementById('auth-form')) {
         checkAuth()
         showToast('Authentication successful! Welcome to the AR Platform.', 'success')
       } else {
-        showToast(data.msg || 'Authentication failed', 'error')
+        // Handle specific error codes
+        if (res.status === 503) {
+          showToast(`${data.msg}\n${data.details || 'Start MongoDB with: mongod'}`, 'error')
+        } else {
+          showToast(data.msg || 'Authentication failed', 'error')
+        }
       }
     } catch (err) {
       console.error(err)
-      showToast('Internal App Error: ' + err.message, 'error')
+      showToast('Server Connection Error - Please ensure the backend is running', 'error')
+    } finally {
+      // Restore button state
+      submitBtn.disabled = false
+      submitBtn.innerText = originalText
     }
   })
 }

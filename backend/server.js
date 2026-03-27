@@ -14,11 +14,47 @@ app.use(express.json())
 // Serve static files from the frontend
 app.use(express.static(path.join(__dirname, '../frontend')))
 
-// MongoDB connection
+// MongoDB Connection with Retry Logic
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/roots-wings'
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err))
+const MAX_RETRIES = 5
+const RETRY_DELAY = 3000 // 3 seconds
+
+let isDbConnected = false
+
+const connectToDatabase = async (attempt = 1) => {
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    })
+    isDbConnected = true
+    console.log('✅ Connected to MongoDB')
+    return true
+  } catch (err) {
+    console.error(`❌ MongoDB connection error (Attempt ${attempt}/${MAX_RETRIES}):`, err.message)
+    
+    if (attempt < MAX_RETRIES) {
+      console.log(`⏳ Retrying in ${RETRY_DELAY / 1000} seconds...`)
+      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY))
+      return connectToDatabase(attempt + 1)
+    } else {
+      console.error('❌ Failed to connect to MongoDB after', MAX_RETRIES, 'attempts')
+      return false
+    }
+  }
+}
+
+// Middleware to check database connection
+app.use((req, res, next) => {
+  if (!isDbConnected) {
+    return res.status(503).json({ 
+      error: 'Database connection failed. Please ensure MongoDB is running.',
+      details: `MongoDB URI: ${MONGODB_URI}`,
+      message: 'Service temporarily unavailable - please start MongoDB and refresh'
+    })
+  }
+  next()
+})
 
 // Routes
 app.use('/api/auth', require('./routes/auth'))
@@ -32,15 +68,39 @@ app.get('/quiz', (req, res) => res.sendFile(path.join(__dirname, '../frontend/qu
 app.get('/chatbot', (req, res) => res.sendFile(path.join(__dirname, '../frontend/chatbot.html')))
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, '../frontend/dashboard.html')))
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: isDbConnected ? 'healthy' : 'unhealthy',
+    database: isDbConnected ? 'connected' : 'disconnected'
+  })
+})
+
 // Catch-all route for SPA logic and 404s
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'))
 })
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-  const { exec } = require('child_process')
-  const url = `http://localhost:${PORT}`
-  const command = process.platform === 'win32' ? `start ${url}` : process.platform === 'darwin' ? `open ${url}` : `xdg-open ${url}`
-  exec(command)
-})
+// Start server after MongoDB connection succeeds
+const startServer = async () => {
+  const connected = await connectToDatabase()
+  if (connected) {
+    app.listen(PORT, () => {
+      console.log(`✅ Server is running on port ${PORT}`)
+      const { exec } = require('child_process')
+      const url = `http://localhost:${PORT}`
+      const command = process.platform === 'win32' ? `start ${url}` : process.platform === 'darwin' ? `open ${url}` : `xdg-open ${url}`
+      exec(command)
+    })
+  } else {
+    console.error('⚠️ Server starting without database connection.')
+    console.error('📝 To fix this:')
+    console.error('1. Install MongoDB: https://www.mongodb.com/try/download/community')
+    console.error('2. Start MongoDB: mongod')
+    console.error('3. OR use MongoDB Atlas: https://www.mongodb.com/cloud/atlas')
+    console.error('4. Set MONGODB_URI in .env file if using Atlas')
+    process.exit(1)
+  }
+}
+
+startServer()

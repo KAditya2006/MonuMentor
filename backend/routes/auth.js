@@ -16,6 +16,14 @@ router.post('/register', async (req, res) => {
   }
 
   try {
+    // Check database connectivity
+    if (!User.collection.conn.readyState) {
+      return res.status(503).json({ 
+        msg: 'Database is not connected',
+        details: 'Please ensure MongoDB is running'
+      })
+    }
+
     let user = await User.findOne({ $or: [{ email }, { username }] })
     if (user) {
       return res.status(400).json({ msg: 'User already exists' })
@@ -44,7 +52,16 @@ router.post('/register', async (req, res) => {
       }
     )
   } catch (err) {
-    console.error(err.message)
+    console.error('Register error:', err.message)
+    
+    // Better error messages
+    if (err.message.includes('bufering') || err.message.includes('timeout')) {
+      return res.status(503).json({ 
+        msg: 'Database connection timeout - MongoDB may not be running',
+        details: 'Start MongoDB with: mongod'
+      })
+    }
+    
     res.status(500).json({ msg: err.message || 'Server error' })
   }
 })
@@ -57,6 +74,14 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
   try {
+    // Check database connectivity
+    if (!User.collection.conn.readyState) {
+      return res.status(503).json({ 
+        msg: 'Database is not connected',
+        details: 'Please ensure MongoDB is running'
+      })
+    }
+
     const user = await User.findOne({ email })
     if (!user) {
       return res.status(400).json({ msg: 'Invalid Credentials' })
@@ -84,7 +109,16 @@ router.post('/login', async (req, res) => {
       }
     )
   } catch (err) {
-    console.error(err.message)
+    console.error('Login error:', err.message)
+    
+    // Better error messages
+    if (err.message.includes('bufering') || err.message.includes('timeout')) {
+      return res.status(503).json({ 
+        msg: 'Database connection timeout - MongoDB may not be running',
+        details: 'Start MongoDB with: mongod'
+      })
+    }
+    
     res.status(500).json({ msg: err.message || 'Server error' })
   }
 })
