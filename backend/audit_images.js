@@ -40,16 +40,16 @@ async function fixBrokenImages() {
       const batch = monuments.slice(i, i + BATCH_SIZE)
       
       const promises = batch.map(async (m) => {
-        const url = m.imageUrl
+        const url = (m.images && m.images.length > 0) ? m.images[0] : null
         const isValid = await pingUrl(url)
         
         if (!isValid) {
           brokenCount++
-          console.log(`[BROKEN] ${m.name} -> ${url}`)
+          console.log(`[BROKEN] ${m.name} -> ${url || 'No image'}`)
           const newUrl = getRandomFallback()
-          m.imageUrl = newUrl
+          m.images = [newUrl]
           await m.save()
-          console.log(`[FIXED] ${m.name} -> Swapped with fallback.`)
+          console.log(`[FIXED] ${m.name} -> Swapped with a fallback image.`)
         }
       })
       

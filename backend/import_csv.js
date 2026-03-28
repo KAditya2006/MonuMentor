@@ -64,7 +64,8 @@ mongoose.connect(MONGODB_URI)
         city,
         category,
         description,
-        images: imageLink !== '' ? [imageLink] : []
+        // Only add image if it's a real link, not just the base domain
+        images: imageLink && imageLink.length > 30 ? [imageLink] : []
       }
 
       if (modelLink !== '') {
