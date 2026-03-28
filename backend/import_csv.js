@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 const fs = require('fs')
+const path = require('path')
 require('dotenv').config()
 
 const Monument = require('./models/Monument')
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/roots-wings'
-const CSV_PATH = 'c:\\Users\\LENOVO\\Downloads\\india_520_monuments_dataset.csv'
+const CSV_PATH = path.join(__dirname, '../india_520_monuments_dataset.csv')
 
 const determineCategory = (name, city, description) => {
   const text = (name + ' ' + city + ' ' + description).toLowerCase()

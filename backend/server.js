@@ -49,8 +49,7 @@ app.use((req, res, next) => {
   if (!isDbConnected) {
     return res.status(503).json({ 
       error: 'Database connection failed. Please ensure MongoDB is running.',
-      details: `MongoDB URI: ${MONGODB_URI}`,
-      message: 'Service temporarily unavailable - please start MongoDB and refresh'
+      message: 'Service temporarily unavailable - please check server logs for details'
     })
   }
   next()
@@ -86,11 +85,14 @@ const startServer = async () => {
   const connected = await connectToDatabase()
   if (connected) {
     app.listen(PORT, () => {
-      console.log(`✅ Server is running on port ${PORT}`)
-      const { exec } = require('child_process')
-      const url = `http://localhost:${PORT}`
-      const command = process.platform === 'win32' ? `start ${url}` : process.platform === 'darwin' ? `open ${url}` : `xdg-open ${url}`
-      exec(command)
+      console.log(`✅ Server is running on port ${PORT}`);
+      // Open the browser only in development mode
+      if (process.env.NODE_ENV !== 'production') {
+        const { exec } = require('child_process');
+        const url = `http://localhost:${PORT}`;
+        const command = process.platform === 'win32' ? `start ${url}` : process.platform === 'darwin' ? `open ${url}` : `xdg-open ${url}`;
+        exec(command);
+      }
     })
   } else {
     console.error('⚠️ Server starting without database connection.')
