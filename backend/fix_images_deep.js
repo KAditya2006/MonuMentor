@@ -46,6 +46,11 @@ mongoose.connect(MONGODB_URI)
     for (let i = 0; i < toFix.length; i++) {
       const doc = toFix[i]
 
+      if (!doc.name) {
+        console.log(`[${i + 1}/${toFix.length}] Skipping document with missing name.`)
+        continue;
+      }
+
       let newImg = await findCommonsImage(doc.name)
 
       if (!newImg && doc.name.includes(' Temple')) newImg = await findCommonsImage(doc.name.replace(' Temple', ''))

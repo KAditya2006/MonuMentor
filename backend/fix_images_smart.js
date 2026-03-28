@@ -9,7 +9,9 @@ const FALLBACK_IMG = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/
 async function findBetterImage (query) {
   const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=1&prop=pageimages&pithumbsize=500&format=json`
   try {
-    const res = await fetch(url)
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+    })
     const data = await res.json()
     if (data.query && data.query.pages) {
       const pages = data.query.pages
@@ -34,7 +36,7 @@ mongoose.connect(MONGODB_URI)
     const toFix = allMonuments.filter(m => {
       if (!m.images || m.images.length === 0) return true
       const img = m.images[0].toLowerCase()
-      return img === FALLBACK_IMG.toLowerCase() || img.endsWith('.svg')
+      return img === FALLBACK_IMG.toLowerCase() || img.endsWith('.svg') || img.length < 35
     })
 
     console.log(`Found ${toFix.length} monuments that need image fixing.`)
@@ -43,6 +45,11 @@ mongoose.connect(MONGODB_URI)
 
     for (let i = 0; i < toFix.length; i++) {
       const doc = toFix[i]
+
+      if (!doc.name) {
+        console.log(`[${i + 1}/${toFix.length}] Skipping document with missing name.`)
+        continue;
+      }
 
       let newImg = await findBetterImage(doc.name)
       if (!newImg && doc.name.includes(' Temple')) {

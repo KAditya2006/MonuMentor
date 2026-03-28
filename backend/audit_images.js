@@ -3,9 +3,12 @@ require('dotenv').config()
 const Monument = require('./models/Monument')
 
 async function pingUrl(url) {
-  if (!url || !url.startsWith('http')) return false
+  if (!url || !url.startsWith('http') || url.length < 35) return false
   try {
-    const res = await fetch(url, { method: 'HEAD' })
+    const res = await fetch(url, { 
+      method: 'HEAD',
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+    })
     return res.ok // true if status is 200-299
   } catch (e) {
     return false

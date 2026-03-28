@@ -42,6 +42,11 @@ mongoose.connect(MONGODB_URI)
       const doc = toFix[i]
 
       let newImg = null
+      
+      if (!doc.name) {
+        console.log(`[${i + 1}/${toFix.length}] Skipping document with missing name.`)
+        continue;
+      }
 
       // 1. Try first 2 words
       const words = doc.name.split(' ')
