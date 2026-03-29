@@ -49,6 +49,10 @@ function updateUI(user) {
     const visitedCount = user.visitedMonuments?.length || 0;
     const favCount = user.favoriteMonuments?.length || 0;
     const quizScore = user.totalQuizScore || 0;
+
+    // Real Dynamic Sub-text
+    const dynamicGreeting = `Continue your journey through India's history. You have explored **${visitedCount}** monuments and earned **${quizScore}** points. Your legacy continues!`;
+    document.getElementById('welcome-stats-text').innerHTML = dynamicGreeting.replace(/\*\*(.*?)\*\*/g, '<span style="color: var(--primary-saffron); font-weight: 700;">$1</span>');
     
     document.getElementById('stat-visited').textContent = visitedCount;
     document.getElementById('stat-quiz-score').textContent = quizScore;
@@ -92,6 +96,22 @@ function updateUI(user) {
 function renderPerformanceChart(user) {
     const ctx = document.getElementById('performanceChart').getContext('2d');
     
+    // Process real quiz data
+    const quizHistory = user.quizHistory || [];
+    // Sort oldest to newest for the chart timeline
+    const chronologicalHistory = [...quizHistory].reverse();
+    
+    const scores = chronologicalHistory.length > 0 
+        ? chronologicalHistory.map(q => q.score) 
+        : [0]; // Fallback if no history yet
+    
+    const labels = chronologicalHistory.length > 0
+        ? chronologicalHistory.map(q => {
+            const date = new Date(q.createdAt);
+            return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+        })
+        : ["Start Journey"];
+
     // Gradient setup
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, 'rgba(255, 153, 51, 0.4)');
@@ -100,12 +120,12 @@ function renderPerformanceChart(user) {
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+            labels: labels,
             datasets: [{
                 label: 'Heritage Mastery',
-                data: [10, 25, 15, 45, (user.totalQuizScore/10) || 30, (user.totalQuizScore/5) || 50],
+                data: scores,
                 borderColor: '#FF9933',
-                background: gradient,
+                backgroundColor: gradient,
                 fill: true,
                 tension: 0.4,
                 pointRadius: 4,

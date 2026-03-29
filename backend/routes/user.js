@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
+const QuizResult = require('../models/QuizResult')
 const auth = require('../middleware/auth')
 
 // @route   POST api/user/favorite
@@ -55,7 +56,13 @@ router.get('/dashboard', auth, async (req, res) => {
       .populate('favoriteMonuments')
       .populate('visitedMonuments')
       .select('-password')
-    res.json(user)
+    
+    // Fetch last 6 quiz results for the user
+    const quizHistory = await QuizResult.find({ user: req.user.id })
+      .sort({ createdAt: -1 })
+      .limit(6)
+
+    res.json({ ...user.toObject(), quizHistory })
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')
