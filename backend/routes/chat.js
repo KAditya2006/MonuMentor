@@ -36,9 +36,9 @@ router.post('/', async (req, res) => {
 
     // If API Key is still missing after initAI
     if (!genAI || !process.env.GEMINI_API_KEY) {
-      console.warn("GEMINI_API_KEY is missing from .env.");
+      console.warn("⚠️  [SECURITY/CONFIG] GEMINI_API_KEY is missing from .env server-side.");
       return res.status(200).json({ 
-        response: `The Heritage Expert Engine requires an API Key. Please add 'GEMINI_API_KEY' to your .env file to unlock the best AI knowledge.`
+        response: `Our heritage specialist is currently refining its records. Please share your question again in a moment.`
       });
     }
 
