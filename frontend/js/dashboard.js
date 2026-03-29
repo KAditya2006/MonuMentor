@@ -1,84 +1,153 @@
+/**
+ * MonuMentor Dashboard 2.0 - Advanced Heritage UI
+ * Handles data fetching, visualization, and premium UI rendering
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
-  const token = localStorage.getItem('token')
-  if (!token) {
-    alert('Please login to view dashboard')
-    window.location.href = '/'
-    return
-  }
-
-  fetchDashboardData()
-})
-
-async function fetchDashboardData () {
-  try {
-    const res = await fetch('/api/user/dashboard', {
-      headers: getAuthHeaders()
-    })
-
-    if (res.ok) {
-      const user = await res.json()
-      populateDashboard(user)
-    } else {
-      console.error('Failed to fetch dashboard data')
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/'; // Simple protection, backend verifies token
+        return;
     }
-  } catch (err) {
-    console.error(err)
-  }
+
+    initDashboard();
+});
+
+async function initDashboard() {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('/api/user/dashboard', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            }
+        });
+
+        const userData = await response.json();
+        
+        if (response.ok) {
+            updateUI(userData);
+            renderPerformanceChart(userData);
+        } else {
+            handleError("Session expired. Please login again.");
+        }
+    } catch (err) {
+        console.error("Dashboard Error:", err);
+        handleError("Connection to heritage vault lost. Retrying...");
+    }
 }
 
-function populateDashboard (user) {
-  document.getElementById('user-name').innerText = user.username
-  document.getElementById('total-score').innerText = user.totalQuizScore || 0
+function updateUI(user) {
+    // 1. Profile & Greetings
+    const username = user.username || user.name || "Explorer";
+    document.getElementById('user-display-name').textContent = username;
+    document.getElementById('welcome-name').textContent = username;
+    document.getElementById('user-avatar-initials').textContent = username.charAt(0).toUpperCase();
 
-  const favList = document.getElementById('fav-list')
-  const visitedList = document.getElementById('visited-list')
+    // 2. Stats
+    const visitedCount = user.visitedMonuments?.length || 0;
+    const favCount = user.favoriteMonuments?.length || 0;
+    const quizScore = user.totalQuizScore || 0;
+    
+    document.getElementById('stat-visited').textContent = visitedCount;
+    document.getElementById('stat-quiz-score').textContent = quizScore;
+    document.getElementById('stat-favorites').textContent = favCount;
+    
+    // Rank logic
+    let rank = "Bronze Explorer";
+    if (quizScore > 100) rank = "Silver Historian";
+    if (quizScore > 500) rank = "Gold Archivist";
+    if (quizScore > 1000) rank = "Platinum Guardian";
+    document.getElementById('stat-rank').textContent = rank;
 
-  document.getElementById('fav-count').innerText = user.favoriteMonuments.length
-  document.getElementById('visited-count').innerText = user.visitedMonuments.length
-
-  favList.innerHTML = ''
-  if (user.favoriteMonuments.length === 0) {
-    favList.innerHTML = '<li>No favorites added yet.</li>'
-  } else {
-    user.favoriteMonuments.forEach(m => {
-      favList.innerHTML += `<li>${m.name} <a href="/monument?id=${m._id}">View</a></li>`
-    })
-  }
-
-  visitedList.innerHTML = ''
-  if (user.visitedMonuments.length === 0) {
-    visitedList.innerHTML = '<li>No monuments visited yet.</li>'
-  } else {
-    user.visitedMonuments.forEach(m => {
-      visitedList.innerHTML += `<li>${m.name} <a href="/monument?id=${m._id}">View</a></li>`
-    })
-  }
-
-  // Render Chart
-  const ctx = document.getElementById('progressChart').getContext('2d')
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Visited (10x)', 'Favorites (5x)', 'Quiz Score'],
-      datasets: [{
-        data: [
-          user.visitedMonuments.length * 10,
-          user.favoriteMonuments.length * 5,
-          user.totalQuizScore || 1
-        ],
-        backgroundColor: [
-          '#138808',
-          '#FF9933',
-          '#0D47A1'
-        ],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'bottom', labels: { color: '#fff' } }
-      }
+    // 3. Favorites List (Mini)
+    const favList = document.getElementById('favorites-mini-list');
+    if (user.favoriteMonuments && user.favoriteMonuments.length > 0) {
+        favList.innerHTML = user.favoriteMonuments.slice(0, 4).map(m => `
+            <div class="list-item">
+                <img src="${m.ImageLink || 'https://images.pexels.com/photos/1603650/pexels-photo-1603650.jpeg?auto=compress&cs=tinysrgb&w=150'}" class="item-img" alt="${m.name}">
+                <div class="item-info">
+                    <h4>${m.name || m['Monument Name']}</h4>
+                    <p style="color:#A1A1AA; font-size:0.75rem;">${m.State}, ${m.District}</p>
+                </div>
+                <a href="/monument?id=${m._id}" style="margin-left: auto; color: var(--primary-saffron); font-size: 0.8rem; font-weight: 600;">VIEW</a>
+            </div>
+        `).join('');
     }
-  })
+
+    // 4. Recently Explored (Grid)
+    const visitedGrid = document.getElementById('recent-explored-grid');
+    if (user.visitedMonuments && user.visitedMonuments.length > 0) {
+        visitedGrid.innerHTML = user.visitedMonuments.slice(0, 4).map(m => `
+            <div class="stat-card" style="padding: 1rem; flex-direction: column; align-items: flex-start; gap: 8px;">
+                <img src="${m.ImageLink || 'https://via.placeholder.com/300x150'}" style="width: 100%; height: 100px; border-radius: 12px; object-fit: cover;">
+                <h4 style="font-size: 0.9rem; margin-top: 8px;">${m.name || m['Monument Name']}</h4>
+                <p style="color: var(--text-dim); font-size: 0.7rem;">${m.District}, ${m.State}</p>
+            </div>
+        `).join('');
+    }
+}
+
+function renderPerformanceChart(user) {
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    
+    // Gradient setup
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(255, 153, 51, 0.4)');
+    gradient.addColorStop(1, 'rgba(255, 153, 51, 0)');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+            datasets: [{
+                label: 'Heritage Mastery',
+                data: [10, 25, 15, 45, (user.totalQuizScore/10) || 30, (user.totalQuizScore/5) || 50],
+                borderColor: '#FF9933',
+                background: gradient,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 4,
+                pointBackgroundColor: '#FF9933',
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#A1A1AA', font: { size: 10 } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#A1A1AA', font: { size: 10 } }
+                }
+            }
+        }
+    });
+}
+
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        'x-auth-token': token || ''
+    };
+}
+
+function handleError(msg) {
+    console.error(msg);
+    // Optional: add a toast or error UI
+}
+
+// Mobile sidebar toggle (if implemented in HTML buttons later)
+function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('active');
 }

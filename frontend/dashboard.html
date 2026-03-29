@@ -1,119 +1,659 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>User Dashboard | monuMentor</title>
-  <meta name="description" content="Explore 500+ Indian monuments with MonuMentor. Discover history, culture, and 3D heritage experiences.">
-  <meta property="og:title" content="monuMentor - Explore Indian Cultural Heritage">
-  <meta property="og:description" content="Explore Indian monuments in 3D with MonuMentor.">
-  <meta property="og:type" content="website">
-  <meta name="twitter:title" content="monuMentor - Explore Indian Cultural Heritage">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="assets/images/logo2.jpeg"   type="image/png">
-  
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    @media(min-width: 768px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .stat-card {
-      text-align: center;
-      padding: 2rem;
-    }
-    .stat-card h2 {
-      font-size: 3rem;
-      color: var(--primary-saffron);
-      margin: 1rem 0;
-    }
-    .lists-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    @media(min-width: 768px) {
-      .lists-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .monument-list {
-      list-style: none;
-      padding: 0;
-    }
-    .monument-list li {
-      padding: 1rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: var(--radius-md);
-      margin-bottom: 0.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .monument-list li a {
-      color: var(--primary-blue);
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonuMentor | Premium Heritage Dashboard</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-saffron: #FF9933;
+            --primary-white: #FFFFFF;
+            --primary-green: #138808;
+            --secondary-blue: #0D47A1;
+            --bg-dark: #0A0A0B;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #F4F4F5;
+            --text-dim: #A1A1AA;
+            --sidebar-width: 260px;
+            --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- DASHBOARD LAYOUT --- */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--card-border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-saffron), var(--primary-green));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 8px 16px rgba(255, 153, 51, 0.3);
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-saffron), var(--primary-white));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 153, 51, 0.1);
+            color: var(--primary-saffron);
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        /* Main Content Styling */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem 3rem;
+            transition: all 0.4s ease;
+        }
+
+        .top-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .search-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 400px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--primary-saffron);
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .notification-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notif-dot {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-saffron);
+            border-radius: 50%;
+            border: 2px solid var(--bg-dark);
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            border: 2px solid var(--card-border);
+        }
+
+        /* --- HERO AND CARDS --- */
+        .welcome-hero {
+            background: linear-gradient(135deg, rgba(255, 153, 51, 0.15), rgba(19, 136, 8, 0.05));
+            border: 1px solid rgba(255, 153, 51, 0.2);
+            padding: 3rem;
+            border-radius: var(--radius-xl);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .welcome-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 500px;
+        }
+
+        .hero-graphics {
+            font-size: 8rem;
+            opacity: 0.1;
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            transform: rotate(-15deg);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-info span {
+            display: block;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .stat-info h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        /* Data Section */
+        .data-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .glass-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        /* Chart Area */
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Favorite Lists */
+        .items-list {
+            list-style: none;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .list-item:hover {
+            background: rgba(255, 153, 51, 0.05);
+            border-color: rgba(255, 153, 51, 0.1);
+        }
+
+        .item-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .item-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        .item-info small {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+        }
+        
+        .view-all-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary-saffron);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 1200px) {
+            .data-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-wrapper {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .search-box {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-navbar {
+                flex-direction: column-reverse;
+                gap: 1.5rem;
+                align-items: stretch;
+            }
+            .search-box {
+                width: 100%;
+            }
+            .welcome-hero {
+                padding: 2rem;
+            }
+            .welcome-text h1 {
+                font-size: 1.8rem;
+            }
+            .dashboard-container {
+                padding-bottom: 80px; /* Space for bottom nav */
+            }
+            .sidebar {
+                display: none;
+            }
+            .bottom-nav {
+                display: flex !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 11, 0.95);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid var(--card-border);
+                justify-content: space-around;
+                padding: 0.8rem 0.5rem;
+                z-index: 1000;
+            }
+            .bottom-nav a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+                color: var(--text-dim);
+                text-decoration: none;
+                font-size: 0.7rem;
+            }
+            .bottom-nav a.active {
+                color: var(--primary-saffron);
+            }
+            .bottom-nav i {
+                font-size: 1.4rem;
+            }
+        }
+
+        .bottom-nav {
+            display: none;
+        }
+
+        /* Animation Classes */
+        .fade-up { opacity: 0; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="logo">monuMentor</div>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/explore">Explore</a></li>
-      <li><a href="/quiz">Quiz</a></li>
-      <li><a href="/chatbot">AI Assistant</a></li>
-    </ul>
-    <div class="nav-buttons" id="nav-auth-container"></div>
-  </nav>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon"><i class="fas fa-landmark"></i></div>
+                <div class="logo-text">monuMentor</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-item">
+                    <a href="/dashboard" class="nav-link active">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/explore" class="nav-link">
+                        <i class="fas fa-compass"></i>
+                        <span>Explore</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" id="nav-favorites">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/quiz" class="nav-link">
+                        <i class="fas fa-brain"></i>
+                        <span>Quiz Lab</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/chatbot" class="nav-link">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Assistant</span>
+                    </a>
+                </div>
+            </nav>
 
-  <div class="container fade-up">
-    <h1>Welcome, <span id="user-name" style="color:var(--primary-saffron)">User</span>!</h1>
-    <p style="color:var(--text-secondary)">Track your exploration and learning progress.</p>
-    
-    <div class="dashboard-grid">
-      <div class="stat-card glass-card">
-        <h3>Total Quiz Score</h3>
-        <h2 id="total-score">0</h2>
-        <p>Keep taking quizzes to increase your score!</p>
-      </div>
-      
-      <div class="glass-card" style="padding: 1rem;">
-        <h3 style="text-align:center;margin-bottom:1rem;">Activity Breakdown</h3>
-        <canvas id="progressChart"></canvas>
-      </div>
-    </div>
-    
-    <div class="lists-grid">
-      <div class="glass-card">
-        <h3 style="margin-bottom: 1rem; color:var(--primary-green)">Visited Monuments (<span id="visited-count">0</span>)</h3>
-        <ul class="monument-list" id="visited-list">
-          <li>Loading...</li>
-        </ul>
-      </div>
-      
-      <div class="glass-card">
-        <h3 style="margin-bottom: 1rem; color: #ff5252">Favorite Monuments (<span id="fav-count">0</span>)</h3>
-        <ul class="monument-list" id="fav-list">
-          <li>Loading...</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+            <div class="nav-footer">
+                <a href="#" class="nav-link" style="margin-top: auto;" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sign Out</span>
+                </a>
+            </div>
+        </aside>
 
-  <script src="/js/main.js"></script>
-  <script src="/js/voice.js"></script>
-  <script src="/js/dashboard.js"></script>
+        <!-- Main Dashboard Content -->
+        <main class="main-wrapper">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search architecture, cities, or eras...">
+                </div>
+                
+                <div class="user-profile">
+                    <div class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <div class="notif-dot"></div>
+                    </div>
+                    <div class="user-avatar" id="user-avatar-initials">E</div>
+                    <div style="display: flex; flex-direction: column;">
+                        <span style="font-weight: 600; font-size: 0.95rem;" id="user-display-name">Explorer</span>
+                        <span style="color: var(--text-dim); font-size: 0.75rem;">Premium Member</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Welcome Section -->
+            <section class="welcome-hero fade-up">
+                <div class="welcome-text">
+                    <p style="color: var(--primary-saffron); font-weight: 600; margin-bottom: 8px;">DASHBOARD</p>
+                    <h1>Welcome back, <span id="welcome-name" style="color: var(--primary-white);">Arjun</span>!</h1>
+                    <p>Continue your journey through India's magnificent history. You have unlocked 12 new monuments in <span style="color: var(--primary-green);">Rajasthan</span> this week.</p>
+                </div>
+                <div class="hero-graphics">
+                    <i class="fas fa-monument"></i>
+                </div>
+            </section>
+
+            <!-- Stats Overview -->
+            <section class="stats-grid">
+                <div class="stat-card fade-up">
+                    <div class="stat-icon" style="background: rgba(255, 153, 51, 0.15); color: var(--primary-saffron);">
+                        <i class="fas fa-camera-retro"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span>Monuments Visited</span>
+                        <h3 id="stat-visited">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card fade-up" style="animation-delay: 0.1s;">
+                    <div class="stat-icon" style="background: rgba(19, 136, 8, 0.15); color: var(--primary-green);">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span>Explorer Rank</span>
+                        <h3 id="stat-rank">Bronze</h3>
+                    </div>
+                </div>
+                <div class="stat-card fade-up" style="animation-delay: 0.2s;">
+                    <div class="stat-icon" style="background: rgba(51, 153, 255, 0.15); color: #3399FF;">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span>Quiz Legend Score</span>
+                        <h3 id="stat-quiz-score">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card fade-up" style="animation-delay: 0.3s;">
+                    <div class="stat-icon" style="background: rgba(255, 82, 82, 0.15); color: #FF5252;">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span>Favorites</span>
+                        <h3 id="stat-favorites">0</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts & Lists -->
+            <div class="data-section">
+                <!-- Progress Chart -->
+                <div class="glass-panel fade-up">
+                    <div class="panel-header">
+                        <h2>Learning Performance</h2>
+                        <select style="background: transparent; border: 1px solid var(--card-border); color: white; padding: 4px 12px; border-radius: 8px; font-size: 0.8rem;">
+                            <option>Monthly</option>
+                            <option>Weekly</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Favorites -->
+                <div class="glass-panel fade-up" style="animation-delay: 0.2s;">
+                    <div class="panel-header">
+                        <h2>Recent Favorites</h2>
+                        <button class="view-all-btn">View All</button>
+                    </div>
+                    <div class="items-list" id="favorites-mini-list">
+                        <div class="empty-state">No favorites saved yet.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recently Explored -->
+            <section class="glass-panel fade-up" style="animation-delay: 0.3s; margin-top: 1.5rem;">
+                <div class="panel-header">
+                    <h2>Recently Explored</h2>
+                    <button class="view-all-btn">Open History</button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;" id="recent-explored-grid">
+                    <div class="empty-state">Explore monuments to see them here!</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Bottom Nav -->
+        <nav class="bottom-nav">
+            <a href="/dashboard" class="active"><i class="fas fa-th-large"></i><span>Home</span></a>
+            <a href="/explore"><i class="fas fa-search"></i><span>Explore</span></a>
+            <a href="/quiz"><i class="fas fa-award"></i><span>Quiz</span></a>
+            <a href="/chatbot"><i class="fas fa-comment-dots"></i><span>AI</span></a>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/dashboard.js"></script>
+    <script>
+        // Entry Animations
+        gsap.to(".fade-up", {
+            opacity: 1,
+            y: -20,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out"
+        });
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/";
+        }
+    </script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 // Auth State Management
 let authMode = 'login' // 'login' or 'register'
-const API_URL = '/api'
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+  ? 'http://localhost:5000/api' 
+  : 'https://monumentor-dgpy.onrender.com/api'
 
 // --- Custom Toast Notification ---
 function showToast(message, type = 'info') {
