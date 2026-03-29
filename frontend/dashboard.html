@@ -47,6 +47,9 @@
         .dashboard-container {
             display: flex;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
         }
 
         /* Sidebar Styling */
@@ -222,6 +225,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            min-width: 0;
+            width: 100%;
         }
 
         .welcome-text h1 {
@@ -392,26 +397,51 @@
             .main-wrapper {
                 margin-left: 0;
                 padding: 1.5rem;
+                width: 100%;
             }
             .search-box {
-                width: 250px;
+                width: 100%;
+                max-width: 400px;
             }
         }
 
         @media (max-width: 768px) {
             .top-navbar {
                 flex-direction: column-reverse;
-                gap: 1.5rem;
-                align-items: stretch;
+                gap: 1rem;
+                align-items: center;
+                text-align: center;
+            }
+            .user-profile {
+                width: 100%;
+                justify-content: center;
             }
             .search-box {
                 width: 100%;
+                max-width: none;
             }
             .welcome-hero {
                 padding: 2rem;
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+                gap: 1.5rem;
             }
             .welcome-text h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
+                word-wrap: break-word;
+            }
+            .welcome-text p {
+                font-size: 0.95rem;
+                margin: 0 auto;
+            }
+            .hero-graphics {
+                position: relative;
+                font-size: 4rem;
+                right: 0;
+                bottom: 0;
+                transform: none;
+                opacity: 0.3;
             }
             .dashboard-container {
                 padding-bottom: 80px; /* Space for bottom nav */
@@ -445,6 +475,18 @@
                 color: var(--primary-saffron);
             }
             .bottom-nav i {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-wrapper {
+                padding: 1rem;
+            }
+            .welcome-hero {
+                padding: 1.5rem;
+            }
+            .welcome-text h1 {
                 font-size: 1.4rem;
             }
         }
