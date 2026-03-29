@@ -1,131 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Heritage Assistant | monuMentor</title>
-  <meta name="description" content="Explore 500+ Indian monuments with MonuMentor. Discover history, culture, and 3D heritage experiences.">
-  <meta property="og:title" content="monuMentor - Explore Indian Cultural Heritage">
-  <meta property="og:description" content="Explore Indian monuments in 3D with MonuMentor.">
-  <meta property="og:type" content="website">
-  <meta name="twitter:title" content="monuMentor - Explore Indian Cultural Heritage">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="assets/images/logo2.jpeg"   type="image/png">
-  <style>
-    .chat-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      height: 70vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .chat-box {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      padding: 1.5rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .message {
-      max-width: 80%;
-      padding: 1rem;
-      border-radius: var(--radius-md);
-      line-height: 1.5;
-    }
-    .message.bot {
-      background: rgba(13, 71, 161, 0.3);
-      align-self: flex-start;
-      border-left: 4px solid var(--primary-blue);
-    }
-    .message.user {
-      background: rgba(255, 153, 51, 0.3);
-      align-self: flex-end;
-      border-right: 4px solid var(--primary-saffron);
-    }
-    .chat-input {
-      display: flex;
-      padding: 1rem;
-      background: var(--dark-surface);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    }
-    .chat-input input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: white;
-      font-family: inherit;
-      font-size: 1rem;
-      outline: none;
-    }
-    .quick-replies {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
-    }
-    .quick-btn {
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--text-secondary);
-      cursor: pointer;
-      white-space: nowrap;
-      font-size: 0.8rem;
-    }
-    .quick-btn:hover {
-      background: rgba(255,255,255,0.2);
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonuMentor | AI Heritage Assistant</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-saffron: #FF9933;
+            --primary-white: #FFFFFF;
+            --primary-green: #138808;
+            --bg-dark: #0A0A0B;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #F4F4F5;
+            --text-dim: #A1A1AA;
+            --sidebar-width: 260px;
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden; /* No scroll on main page, chat handles its own scroll */
+            min-height: 100vh;
+        }
+
+        /* --- DASHBOARD LAYOUT SYNC --- */
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--card-border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 3rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-saffron), var(--primary-green));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-saffron), var(--primary-white));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 153, 51, 0.1);
+            color: var(--primary-saffron);
+        }
+
+        /* Main Content Styling */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .top-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- AI ASSISTANT UNIQUE STYLES --- */
+        .chat-layout {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-orb {
+            width: 12px;
+            height: 12px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 25px var(--primary-green); }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--card-border);
+            border-radius: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 1.2rem 1.5rem;
+            line-height: 1.6;
+            animation: fadeIn 0.4s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 20px 20px 20px 4px;
+            color: var(--text-main);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary-saffron), #E67E22);
+            color: white;
+            border-radius: 20px 20px 4px 20px;
+            font-weight: 500;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-dim);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Chat Input Area */
+        .chat-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .input-wrapper {
+            background: var(--bg-dark);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            padding: 8px 8px 8px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.3s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary-saffron);
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 12px 0;
+            font-size: 1rem;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--primary-white);
+        }
+
+        .icon-btn.active {
+            color: var(--primary-saffron);
+            background: rgba(255, 153, 51, 0.1);
+            animation: voicePulse 1s infinite;
+        }
+
+        @keyframes voicePulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.4); }
+            100% { box-shadow: 0 0 0 10px rgba(255, 153, 51, 0); }
+        }
+
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-saffron);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(255, 153, 51, 0.2);
+        }
+
+        /* Suggested Topics */
+        .suggestions {
+            display: flex;
+            gap: 12px;
+            margin-top: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .suggest-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggest-card:hover {
+            background: rgba(255, 153, 51, 0.1);
+            border-color: var(--primary-saffron);
+            color: var(--primary-saffron);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); display: none;}
+            .main-wrapper { margin-left: 0; padding: 1.5rem; }
+            .bottom-nav { display: flex !important; }
+        }
+
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 11, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--card-border);
+            justify-content: space-around;
+            padding: 0.8rem 0.5rem;
+            z-index: 1000;
+        }
+        .bottom-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.7rem;
+        }
+        .bottom-nav a.active { color: var(--primary-saffron); }
+    </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="logo">monuMentor</div>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/explore">Explore</a></li>
-      <li><a href="/quiz">Quiz</a></li>
-      <li><a href="/chatbot">AI Assistant</a></li>
-    </ul>
-    <div class="nav-buttons" id="nav-auth-container"></div>
-  </nav>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation (Sync with Dashboard) -->
+        <aside class="sidebar">
+            <a href="/" class="logo-section">
+                <div class="logo-icon"><i class="fas fa-landmark"></i></div>
+                <div class="logo-text">monuMentor</div>
+            </a>
+            <nav class="nav-menu">
+                <div class="nav-item">
+                    <a href="/dashboard" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/explore" class="nav-link">
+                        <i class="fas fa-compass"></i>
+                        <span>Explore</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/quiz" class="nav-link">
+                        <i class="fas fa-brain"></i>
+                        <span>Quiz Lab</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/chatbot" class="nav-link active">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Assistant</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="nav-footer">
+                <a href="#" class="nav-link" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sign Out</span>
+                </a>
+            </div>
+        </aside>
 
-  <div class="container fade-up">
-    <h1 style="text-align:center; color:var(--primary-saffron);">AI Heritage Assistant</h1>
-    <p style="text-align:center; color:var(--text-secondary); margin-bottom: 1rem;">Ask me anything about India's culture and heritage!</p>
+        <!-- Main Content Area -->
+        <main class="main-wrapper">
+            <!-- Top Navbar (Stats removed for focus) -->
+            <header class="top-navbar">
+                <div>
+                    <h2 style="font-family: 'Poppins', sans-serif;">AI Heritage Assistant</h2>
+                    <p style="color: var(--text-dim); font-size: 0.85rem;">Powered by MonuMentor Heritage Engine</p>
+                </div>
+                <div class="ai-status">
+                    <span id="ai-status-label" style="font-size: 0.75rem; color: var(--text-dim);">SYSTEM ONLINE</span>
+                    <div class="ai-orb"></div>
+                </div>
+            </header>
 
-    <div class="chat-container">
-      <div class="chat-box" id="chat-box">
-        <div class="message bot">
-          Namaste! I am your AI Heritage Assistant. I can tell you stories about monuments, historical figures, architecture, and more. Try asking me "Tell me about the Taj Mahal".
-        </div>
-      </div>
-      
-      <div class="chat-input glass-card" style="padding: 1rem;">
-        <input type="text" id="chat-input-field" placeholder="Type your message..." onkeypress="handleKey(event)">
-        <button class="btn btn-outline" onclick="toggleVoice()" id="voice-btn" style="margin-right:0.5rem;" title="Use Voice Input">🎤</button>
-        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
-      </div>
+            <!-- Chat Interface -->
+            <div class="chat-layout">
+                <div class="chat-messages" id="chat-box">
+                    <div class="message bot">
+                        Namaste! I am your AI Heritage Assistant. I can tell you stories about monuments, historical figures, architecture, and more. 
+                        <br><br>
+                        What would you like to explore today?
+                    </div>
+                </div>
 
-      <div class="quick-replies">
-        <button class="quick-btn" onclick="sendQuick('Tell me about Taj Mahal')">Tell me about Taj Mahal</button>
-        <button class="quick-btn" onclick="sendQuick('Who built Hawa Mahal?')">Who built Hawa Mahal?</button>
-        <button class="quick-btn" onclick="sendQuick('List 3 UNESCO sites in India')">List 3 UNESCO sites</button>
-      </div>
+                <div class="chat-footer">
+                    <div class="input-wrapper">
+                        <input type="text" id="chat-input-field" placeholder="Ask about an era, a king, or a temple..." onkeypress="handleKey(event)">
+                        <div class="action-btns">
+                            <button class="icon-btn" id="voice-btn" onclick="toggleVoice()" title="Voice Input">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <button class="send-btn" onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div class="suggestions">
+                        <div class="suggest-card" onclick="sendQuick('Tell me about Taj Mahal')">🏯 Taj Mahal History</div>
+                        <div class="suggest-card" onclick="sendQuick('Who built Hawa Mahal?')">🏰 Hawa Mahal Facts</div>
+                        <div class="suggest-card" onclick="sendQuick('Why is India called Bharat?')">📖 Name Origin</div>
+                        <div class="suggest-card" onclick="sendQuick('List 3 UNESCO sites in India')">🌟 UNESCO Sites</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Bottom Nav -->
+        <nav class="bottom-nav">
+            <a href="/dashboard"><i class="fas fa-th-large"></i><span>Home</span></a>
+            <a href="/explore"><i class="fas fa-search"></i><span>Explore</span></a>
+            <a href="/quiz"><i class="fas fa-award"></i><span>Quiz</span></a>
+            <a href="/chatbot" class="active"><i class="fas fa-comment-dots"></i><span>AI</span></a>
+        </nav>
     </div>
-  </div>
 
-  <script src="/js/main.js"></script>
-  <script src="/js/voice.js"></script>
-  <script src="/js/chatbot.js"></script>
+    <!-- Scripts -->
+    <script src="/js/voice.js"></script>
+    <script src="/js/chatbot.js"></script>
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/";
+        }
+    </script>
 </body>
 </html>

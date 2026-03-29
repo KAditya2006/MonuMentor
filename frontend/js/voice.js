@@ -32,14 +32,18 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
 
 // Inject Language Selector into Navbar
 function initVoiceUI() {
-  const navContainer = document.querySelector('.nav-buttons');
+  const navContainer = document.querySelector('.user-profile') || 
+                       document.querySelector('.ai-status') || 
+                       document.querySelector('.nav-buttons');
   if (!navContainer) return;
 
   // Create language select dropdown
   const selectWrapper = document.createElement('div');
   selectWrapper.className = 'lang-selector-wrapper';
   selectWrapper.style.marginRight = '1rem';
-  selectWrapper.style.display = 'inline-block';
+  selectWrapper.style.display = 'flex';
+  selectWrapper.style.alignItems = 'center';
+  selectWrapper.style.gap = '8px';
 
   const select = document.createElement('select');
   select.id = 'global-lang-select';
