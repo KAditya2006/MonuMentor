@@ -4,6 +4,12 @@ const cors = require('cors')
 const path = require('path')
 require('dotenv').config()
 
+if (process.env.GEMINI_API_KEY) {
+  console.log(`🚀 [SYSTEM] Heritage Engine Key Detected: ${process.env.GEMINI_API_KEY.substring(0, 5)}***`);
+} else {
+  console.warn("⚠️  [SYSTEM] Heritage Engine Key Missing from Environment.");
+}
+
 const app = express()
 const PORT = process.env.PORT || 5000
 
