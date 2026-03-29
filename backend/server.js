@@ -48,8 +48,7 @@ const connectToDatabase = async (attempt = 1) => {
 app.use((req, res, next) => {
   if (!isDbConnected) {
     return res.status(503).json({ 
-      error: 'Database connection failed. Please ensure MongoDB is running.',
-      message: 'Service temporarily unavailable - please check server logs for details'
+      msg: 'We are currently optimizing our heritage records for a smoother experience. Please try again briefly.'
     })
   }
   next()

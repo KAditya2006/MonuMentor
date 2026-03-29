@@ -22,8 +22,8 @@ router.post('/favorite', auth, async (req, res) => {
     await user.save()
     res.json(user.favoriteMonuments)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send('Server Error')
+    console.error('User Action Error:', err)
+    res.status(500).json({ msg: 'Our heritage records are currently being synchronized. Please try again briefly.' })
   }
 })
 
@@ -42,8 +42,8 @@ router.post('/visit', auth, async (req, res) => {
 
     res.json(user.visitedMonuments)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send('Server Error')
+    console.error('User Action Error:', err)
+    res.status(500).json({ msg: 'Our heritage records are currently being synchronized. Please try again briefly.' })
   }
 })
 

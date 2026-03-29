@@ -30,8 +30,8 @@ router.get('/', async (req, res) => {
     const monuments = await Monument.find(query)
     res.json(monuments)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send('Server Error')
+    console.error('Monument Feature Error:', err)
+    res.status(500).json({ msg: 'We are currently optimizing our heritage database for a smoother experience. Please refresh in a moment.' })
   }
 })
 
@@ -46,11 +46,11 @@ router.get('/:id', async (req, res) => {
     }
     res.json(monument)
   } catch (err) {
-    console.error(err.message)
+    console.error('Monument Details Error:', err);
     if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Monument not found' })
+      return res.status(444).json({ msg: 'We could not locate this monument in our ancient scrolls.' })
     }
-    res.status(500).send('Server Error')
+    res.status(500).json({ msg: 'Our archives are momentarily unavailable as we update specific site details.' })
   }
 })
 

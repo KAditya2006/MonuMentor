@@ -80,13 +80,17 @@ async function sendMessage() {
             const data = await res.json();
             appendMessage('bot', data.response, true);
         } else {
-            appendMessage('bot', "Forgive me, my connection to the heritage records is weak right now. Please try again.");
+            // Check if server returned a custom error message
+            const errorData = await res.json().catch(() => ({}));
+            const errorMsg = errorData.response || errorData.msg || "Our heritage specialist is currently refining its records. Please try again in a moment.";
+            appendMessage('bot', errorMsg);
         }
     } catch (err) {
+        console.error('Chat error:', err);
         hideTypingIndicator();
         isBotThinking = false;
-        aiStatusLabel.textContent = "CONNECTION ERROR";
-        appendMessage('bot', 'A network disturbance occurred. My ancient records are temporarily unreachable.');
+        aiStatusLabel.textContent = "SYSTEM OFFLINE";
+        appendMessage('bot', "We are currently optimizing our heritage archives. Please refresh the page and try again shortly.");
     }
 }
 

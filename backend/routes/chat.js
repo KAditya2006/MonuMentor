@@ -3,9 +3,16 @@ const router = express.Router()
 const { GoogleGenerativeAI } = require('@google/generative-ai')
 const translate = require('translate-google-api') // fallback or UI translation
 
-// Initialize Gemini if key exists
-const genAI = process.env.GEMINI_API_KEY ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY) : null;
-const model = genAI ? genAI.getGenerativeModel({ model: "gemini-1.5-flash" }) : null;
+// Initialize Gemini Lazily
+let genAI = null;
+let model = null;
+
+function initAI() {
+  if (!genAI && process.env.GEMINI_API_KEY) {
+    genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  }
+}
 
 // The "Heritage Specialist" System Prompt
 const SYSTEM_PROMPT = `
@@ -22,15 +29,16 @@ You are the MonuMentor Heritage Specialist, an expert AI agent with deep knowled
 // @access  Public
 router.post('/', async (req, res) => {
   try {
+    initAI();
     const { message, lang = 'en-IN' } = req.body
     const targetLangFull = lang || 'en-IN';
     const targetLangCode = targetLangFull.split('-')[0];
 
-    // If API Key is missing, provide a helpful hackathon fallback or error
+    // If API Key is still missing after initAI
     if (!genAI || !process.env.GEMINI_API_KEY) {
-      console.warn("GEMINI_API_KEY is missing from .env. Falling back to basics.");
-      return res.status(401).json({ 
-        response: `The Heritage Expert Engine requires an API Key. Please add 'GEMINI_API_KEY' to your .env file to unlock the best AI knowledge. Current language: ${targetLangFull}`
+      console.warn("GEMINI_API_KEY is missing from .env.");
+      return res.status(200).json({ 
+        response: `The Heritage Expert Engine requires an API Key. Please add 'GEMINI_API_KEY' to your .env file to unlock the best AI knowledge.`
       });
     }
 
@@ -44,8 +52,8 @@ router.post('/', async (req, res) => {
     res.json({ response: responseText });
 
   } catch (err) {
-    console.error("Gemini AI Error:", err.message);
-    res.status(500).json({ response: "The archives are currently unreachable. Please ensure your API Key is valid and try again." })
+    console.error("Gemini AI Error:", err);
+    res.status(500).json({ response: "Our heritage specialist is currently refining its records. Please share your question again in a moment." })
   }
 })
 

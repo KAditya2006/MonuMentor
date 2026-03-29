@@ -20,8 +20,8 @@ router.get('/', async (req, res) => {
     ])
     res.json(questions)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send('Server Error')
+    console.error('Quiz Interaction Error:', err)
+    res.status(500).json({ msg: 'We encountered a momentary issue recording your achievement. Our scrolls are being updated.' })
   }
 })
 

@@ -52,17 +52,8 @@ router.post('/register', async (req, res) => {
       }
     )
   } catch (err) {
-    console.error('Register error:', err.message)
-    
-    // Better error messages
-    if (err.message.includes('bufering') || err.message.includes('timeout')) {
-      return res.status(503).json({ 
-        msg: 'Database connection timeout - MongoDB may not be running',
-        details: 'Start MongoDB with: mongod'
-      })
-    }
-    
-    res.status(500).json({ msg: err.message || 'Server error' })
+    console.error('Register error:', err)
+    res.status(500).json({ msg: 'We are currently refining our explorer registry. Please try your request again shortly.' })
   }
 })
 
@@ -109,17 +100,8 @@ router.post('/login', async (req, res) => {
       }
     )
   } catch (err) {
-    console.error('Login error:', err.message)
-    
-    // Better error messages
-    if (err.message.includes('bufering') || err.message.includes('timeout')) {
-      return res.status(503).json({ 
-        msg: 'Database connection timeout - MongoDB may not be running',
-        details: 'Start MongoDB with: mongod'
-      })
-    }
-    
-    res.status(500).json({ msg: err.message || 'Server error' })
+    console.error('Login error:', err)
+    res.status(500).json({ msg: 'We are currently refining our explorer registry. Please try your request again shortly.' })
   }
 })
 
@@ -131,8 +113,8 @@ router.get('/me', auth, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password')
     res.json(user)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send('Server Error')
+    console.error('Auth check error:', err)
+    res.status(500).json({ msg: 'Heritage verification in progress. Please wait.' })
   }
 })
 
