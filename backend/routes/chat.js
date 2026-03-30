@@ -9,9 +9,9 @@ let model = null;
 
 function initAI() {
   if (!genAI && process.env.GEMINI_API_KEY) {
-    console.log("🚀 [SYSTEM] Heritage Engine Connected Successfully.");
     genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    console.log("🚀 [SYSTEM] Heritage Engine Online. (Gemini 1.5 Flash Connected)");
   }
 }
 
@@ -32,6 +32,7 @@ router.post('/', async (req, res) => {
   try {
     initAI();
     const { message, lang = 'en-IN' } = req.body
+    console.log(`📩 [AI] Incoming Question: "${message}" (${lang})`);
     const targetLangFull = lang || 'en-IN';
     const targetLangCode = targetLangFull.split('-')[0];
 
@@ -53,7 +54,8 @@ router.post('/', async (req, res) => {
     res.json({ response: responseText });
 
   } catch (err) {
-    console.error("Gemini AI Error:", err);
+    console.error("❌ Gemini AI Error Stack:", err.stack || err);
+    if (err.response) console.error("❌ Gemini API Response Status/Error:", JSON.stringify(err.response));
     res.status(500).json({ response: "Our heritage specialist is currently refining its records. Please share your question again in a moment." })
   }
 })

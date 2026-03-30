@@ -4,6 +4,9 @@ const cors = require('cors')
 const path = require('path')
 require('dotenv').config()
 
+const envCount = Object.keys(process.env).filter(k => k !== 'PATH' && k !== 'PSModulePath').length;
+console.log(`📡 [SYSTEM] Environment Audit: ${envCount} variables total.`);
+
 if (process.env.GEMINI_API_KEY) {
   console.log(`🚀 [SYSTEM] Heritage Engine Key Detected: ${process.env.GEMINI_API_KEY.substring(0, 5)}***`);
 } else {

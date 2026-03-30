@@ -1,4 +1,5 @@
 let map
+let markersGroup = null // MarkerClusterGroup
 let markers = []
 let monuments = []
 let allMonumentsForSuggestions = []
@@ -45,6 +46,16 @@ function initMap () {
     subdomains: 'abcd',
     maxZoom: 20
   }).addTo(map)
+
+  // Initialize Marker Cluster Group
+  markersGroup = L.markerClusterGroup({
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true,
+    spiderfyOnMaxZoom: true,
+    removeOutsideVisibleBounds: true,
+    chunkedLoading: true
+  })
+  map.addLayer(markersGroup)
 }
 
 async function fetchMonuments () {
@@ -110,15 +121,13 @@ function renderMonuments () {
 }
 
 function updateMapMarkers () {
-  markers.forEach(m => map.removeLayer(m))
+  markersGroup.clearLayers()
   markers = []
 
   monuments.forEach(mon => {
     if (mon.coordinates && mon.coordinates.lat && mon.coordinates.lng) {
-      // Using a custom icon could be done here, but default is fine for now
-      const marker = L.marker([mon.coordinates.lat, mon.coordinates.lng]).addTo(map)
+      const marker = L.marker([mon.coordinates.lat, mon.coordinates.lng])
       
-      // Traditional Leaflet click/touch tooltip
       marker.bindPopup(`
         <div style="color:black">
           <b>${mon.name}</b><br>${mon.city}, ${mon.state}<br>
@@ -126,7 +135,6 @@ function updateMapMarkers () {
         </div>
       `)
       
-      // Inject Advanced Native DOM Hover Binding
       marker.on('mouseover', (e) => {
           if (window.showHoverPreview) {
               window.showHoverPreview(e.originalEvent, mon);
@@ -139,6 +147,7 @@ function updateMapMarkers () {
       });
       
       markers.push(marker)
+      markersGroup.addLayer(marker)
     }
   })
 
