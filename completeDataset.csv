@@ -429,9 +429,7 @@ West Bengal,Purba Bardhaman,108 Shiva Temples Kalna,23.2185,88.3688,"A breathtak
 West Bengal,Purba Medinipur,Bargabhima Temple,22.2981,87.9234,"An ancient Kali temple in Tamluk combining Buddhist vihara and Hindu Kalinga architectural styles.",https://commons.wikimedia.org/wiki/Special:FilePath/Bargabhima_Temple.jpg,N/A
 West Bengal,Purulia,Banda Deul,23.2842,86.6433,"A majestic 11th-century stone temple standing solitary amidst fields, featuring exquisite Rekha Deul architecture.",https://commons.wikimedia.org/wiki/Special:FilePath/Banda_Deul.jpg,N/A
 West Bengal,South 24 Parganas,Kapil Muni Temple,21.6375,88.0776,"A highly revered temple located at the confluence of the Ganges and the Bay of Bengal on Sagar Island.",https://commons.wikimedia.org/wiki/Special:FilePath/Kapil_Muni_Temple.jpg,N/A
-West Bengal,Uttar Dinajpur,No major monument,25.6200,88.1200,"Known for the Kulik Bird Sanctuary; lacks major officially classified ancient structural monuments.",N/A,N/A
-Bihar,Araria,No major monument,26.1500,87.4300,"An agricultural border district without major formally classified heritage structures.",N/A,N/A
-Bihar,Arwal,No major monument,25.2400,84.6700,"A recently formed district primarily focused on agriculture, lacking major historical monuments.",N/A,N/A
+
 Bihar,Aurangabad,Deo Surya Mandir,24.6533,84.4334,"An exceptionally rare, ancient Sun temple that uniquely faces West instead of East.",https://commons.wikimedia.org/wiki/Special:FilePath/Deo_Surya_Mandir.jpg,N/A
 Bihar,Banka,Mandar Hill Ruins,24.8197,87.0195,"A historically and mythologically significant granite hill featuring ancient rock inscriptions and sculptures.",https://commons.wikimedia.org/wiki/Special:FilePath/Mandar_Hill.jpg,N/A
 Bihar,Begusarai,Jaimangalagarh,25.5925,86.1367,"An ancient fort and temple complex situated near the Kanwar Lake Bird Sanctuary.",https://commons.wikimedia.org/wiki/Special:FilePath/Jaimangalagarh_Temple.jpg,N/A
@@ -445,16 +443,14 @@ Bihar,Gopalganj,Thawe Mandir,26.3150,84.4533,"A historic and highly revered Hind
 Bihar,Jamui,Minto Tower,24.8622,86.1481,"A commemorative clock tower built in 1909 by the Maharaja of Gidhaur to honor the British Viceroy Lord Minto.",https://commons.wikimedia.org/wiki/Special:FilePath/Minto_Tower.jpg,N/A
 Bihar,Jehanabad,Barabar Caves,25.0053,85.0633,"The oldest surviving rock-cut caves in India, dating from the Maurya Empire, famous for their highly polished interiors.",https://commons.wikimedia.org/wiki/Special:FilePath/Barabar_Caves.jpg,N/A
 Bihar,Kaimur,Mundeshwari Temple,25.0514,83.5828,"One of the oldest functional Hindu temples in India, built in 108 CE, dedicated to Lord Shiva and Shakti.",https://commons.wikimedia.org/wiki/Special:FilePath/Mundeshwari_Temple.jpg,N/A
-Bihar,Katihar,No major monument,25.5300,87.5600,"Primarily a major railway junction and agricultural hub; lacks classified ancient historical monuments.",N/A,N/A
-Bihar,Khagaria,No major monument,25.5000,86.4700,"Situated at the confluence of seven rivers, it is an agrarian district without major monumental heritage.",N/A,N/A
-Bihar,Kishanganj,No major monument,26.1000,87.9400,"A tea-producing district bordering West Bengal and Nepal, lacking formally classified major monuments.",N/A,N/A
+
 Bihar,Lakhisarai,Ashok Dham Temple,25.1700,86.0900,"A modern but highly significant temple complex built around an ancient, massive Shiva Lingam discovered underground.",https://commons.wikimedia.org/wiki/Special:FilePath/Ashok_Dham.jpg,N/A
 Bihar,Madhepura,Singheshwar Sthan,25.9751,86.8115,"A highly revered ancient Shiva temple with deep mythological connections to the sage Shringi.",https://commons.wikimedia.org/wiki/Special:FilePath/Singheshwar_Temple.jpg,N/A
 Bihar,Madhubani,Kapileshwar Sthan,26.3377,86.0694,"An ancient Shiva temple believed to have been established by the Vedic sage Kapila.",https://commons.wikimedia.org/wiki/Special:FilePath/Kapileshwar_Sthan.jpg,N/A
 Bihar,Munger,Munger Fort,25.3855,86.4593,"A historic fort built on a rocky hillock along the Ganges, historically significant during the rule of Mir Qasim.",https://commons.wikimedia.org/wiki/Special:FilePath/Munger_Fort.jpg,N/A
 Bihar,Muzaffarpur,Garib Nath Temple,26.1197,85.3905,"A prominent and bustling Shiva temple, often referred to as the 'Deoghar of Bihar'.",https://commons.wikimedia.org/wiki/Special:FilePath/Garib_Nath_Temple.jpg,N/A
 Bihar,Nalanda,Nalanda University Ruins,25.1373,85.4430,"A UNESCO site encompassing the vast red-brick ruins of one of the world's most ancient and prestigious residential universities.",https://commons.wikimedia.org/wiki/Special:FilePath/Nalanda_Ruins.jpg,N/A
-Bihar,Nawada,No major monument,24.8800,85.5300,"Renowned for the Kakolat Waterfall, but lacks major historically classified built monuments.",N/A,N/A
+
 Bihar,Patna,Golghar,25.6203,85.1372,"A massive, beehive-shaped granary built by the British in 1786 offering a panoramic view of the Ganges.",https://commons.wikimedia.org/wiki/Special:FilePath/Golghar_Patna.jpg,N/A
 Bihar,Purnia,Jalalgarh Fort,25.9900,87.5000,"A ruined 18th-century Islamic fort built to protect the region from Nepalese invasions.",https://commons.wikimedia.org/wiki/Special:FilePath/Jalalgarh_Fort.jpg,N/A
 Bihar,Rohtas,Rohtasgarh Fort,24.6346,83.9102,"A massive and impregnable ancient hill fort historically associated with King Harishchandra and Sher Shah Suri.",https://commons.wikimedia.org/wiki/Special:FilePath/Rohtasgarh_Fort.jpg,N/A
@@ -462,7 +458,7 @@ Bihar,Saharsa,Sun Temple Kandaha,25.8800,86.5900,"An ancient 14th-century Sun te
 Bihar,Samastipur,Vidyapati Dham,25.6200,85.8800,"A temple dedicated to Lord Shiva, intimately associated with the legendary Maithili poet Vidyapati.",https://commons.wikimedia.org/wiki/Special:FilePath/Vidyapati_Dham.jpg,N/A
 Bihar,Saran,Chirand Archaeological Site,25.7483,84.8344,"An extremely significant Neolithic archaeological site dating back to 2500 BCE.",https://commons.wikimedia.org/wiki/Special:FilePath/Chirand_Excavation.jpg,N/A
 Bihar,Sheikhpura,Girihinda Mountain Temple,25.1300,85.8500,"A historic hilltop Shiva temple known locally for its panoramic views of the surrounding plains.",https://commons.wikimedia.org/wiki/Special:FilePath/Girihinda_Temple.jpg,N/A
-Bihar,Sheohar,No major monument,26.5100,85.2900,"The smallest district in Bihar, primarily agricultural, without major classified heritage structures.",N/A,N/A
+
 Bihar,Sitamarhi,Janaki Mandir,26.5960,85.4890,"A beautiful temple built at the site traditionally believed to be the birthplace of Goddess Sita.",https://commons.wikimedia.org/wiki/Special:FilePath/Janaki_Mandir_Sitamarhi.jpg,N/A
 Bihar,Siwan,No major monument,26.2200,84.3600,"Known as the birthplace of India's first President, Dr. Rajendra Prasad, but lacks major ancient architectural monuments.",N/A,N/A
 Bihar,Supaul,No major monument,26.1200,86.6000,"Located in the Kosi river basin, it is prone to shifting geography and lacks ancient monuments.",N/A,N/A
