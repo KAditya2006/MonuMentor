@@ -7,7 +7,7 @@ require('dotenv').config()
 const Monument = require('./models/Monument')
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/roots-wings'
-const CSV_PATH = path.join(__dirname, '../india_520_monuments_dataset.csv')
+const CSV_PATH = path.join(__dirname, '../completeDataset.csv')
 
 const fallbackImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Taj_Mahal_in_March_2004.jpg/800px-Taj_Mahal_in_March_2004.jpg'
 
@@ -23,7 +23,7 @@ const getWikiImage = async (title) => {
 
 const seedDatabase = async () => {
   try {
-    console.log(`📡 [SYSTEM] Attempting 520-Monument Restoration...`);
+    console.log(`📡 [SYSTEM] Attempting Monument Database Restoration...`);
     
     // Detailed connection options for Atlas vs Local
     const connectionOptions = {
@@ -32,14 +32,14 @@ const seedDatabase = async () => {
     };
 
     await mongoose.connect(MONGODB_URI, connectionOptions)
-    console.log('✅ Connected to MongoDB (Atlas or Local) for Restoration.')
+    console.log('✅ Connected to MongoDB for Restoration.')
     
     console.log('🧹 [DATABASE] Clearing current records to prevent duplicates...');
     await Monument.deleteMany({})
 
     const monuments = []
     
-    console.log('📖 [DATA] Reading verified 520 dataset from CSV...');
+    console.log('📖 [DATA] Reading dataset from CSV...');
     
     fs.createReadStream(CSV_PATH)
       .pipe(csv())
@@ -51,20 +51,22 @@ const seedDatabase = async () => {
         });
 
         // Skip truly empty rows or comments
-        if (!row['Monument Name'] && !row['State/UT']) return;
+        if (!row.monument_name && !row.state) return;
 
         // Map verified CSV fields to Monument Schema
+        // Dataset headers: state,district,monument_name,latitude,longitude,description,image_link,model_3d_link
         monuments.push({
-          name: row['Monument Name'] || 'Unknown Monument',
-          state: row['State/UT'] || 'Unknown State', // Required field
-          city: row.City || 'Unknown', // Required field
-          category: row.Category || 'Monuments', // Required field
-          description: row.Description || '',
+          name: row.monument_name || 'Unknown Monument',
+          state: row.state || 'Unknown State',
+          city: row.district || 'Unknown',
+          category: row.category || 'Monuments',
+          description: row.description || '',
           coordinates: {
-            lat: parseFloat(row.Latitude) || 0,
-            lng: parseFloat(row.Longitude) || 0
+            lat: parseFloat(row.latitude) || 0,
+            lng: parseFloat(row.longitude) || 0
           },
-          images: row['Image URL'] ? [row['Image URL']] : [fallbackImg]
+          images: row.image_link ? [row.image_link] : [fallbackImg],
+          modelUrl: row.model_3d_link === 'N/A' ? null : row.model_3d_link
         })
       })
       .on('end', async () => {
@@ -84,7 +86,7 @@ const seedDatabase = async () => {
         }))
 
         await Monument.insertMany(finalMonuments)
-        console.log('🚀 [SUCCESS] 520 Real Monuments successfully restored to Database.')
+        console.log('🚀 [SUCCESS] Monument database successfully restored.');
         process.exit(0)
       })
 
