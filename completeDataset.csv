@@ -822,9 +822,9 @@ Himachal Pradesh,Mandi,Prashar Lake Temple,31.7500,77.0600,"A 13th-century pagod
 Himachal Pradesh,Shimla,Viceregal Lodge,31.1000,77.1400,"Also known as Rashtrapati Niwas, a majestic Jacobethan-style building that formerly housed the British Viceroy of India.",https://commons.wikimedia.org/wiki/Special:FilePath/Viceregal_Lodge_Shimla.jpg,N/A
 Himachal Pradesh,Sirmaur,Jaitak Fort,30.6000,77.2900,"A historic fort built by Gurkha leader Ranjor Singh Thapa in 1810 using material recovered from the Nahan fort.",https://commons.wikimedia.org/wiki/Special:FilePath/Jaitak_Fort.jpg,N/A
 Himachal Pradesh,Solan,Kuthar Fort,30.9500,76.9500,"An 800-year-old fort featuring freshwater springs and exquisite Rajput-style architectural details.",https://commons.wikimedia.org/wiki/Special:FilePath/Kuthar_Fort.jpg,N/A
-Himachal Pradesh,Una,No major monument,31.4600,76.2700,"Primarily an industrial and religious gateway district lacking major officially classified archaeological monuments.",N/A,N/A
+
 Jammu and Kashmir,Anantnag,Martand Sun Temple,33.7400,75.2100,"A massive, ruined 8th-century Hindu temple dedicated to Surya, showcasing brilliant Kashmiri architectural style.",https://commons.wikimedia.org/wiki/Special:FilePath/Martand_Sun_Temple.jpg,N/A
-Jammu and Kashmir,Bandipora,No major monument,34.4200,74.6500,"Known for the Wular Lake; lacks major ancient architectural monuments.",N/A,N/A
+
 Jammu and Kashmir,Baramulla,Parihaspora Ruins,34.1500,74.6300,"The archaeological remains of an ancient capital city built by King Lalitaditya Muktapida in the 8th century.",https://commons.wikimedia.org/wiki/Special:FilePath/Parihaspora_Ruins.jpg,N/A
 Jammu and Kashmir,Budgam,Tomb of Sheikh Noor-ud-din Wali,33.8600,74.7600,"The highly revered shrine of the patron saint of Kashmir, located in the town of Charar-e-Sharief.",https://commons.wikimedia.org/wiki/Special:FilePath/Charar_e_Sharief.jpg,N/A
 Jammu and Kashmir,Doda,Bhaderwah Fort,32.9800,75.7100,"A historic fort built in 1733, later repurposed as a prison for freedom fighters.",https://commons.wikimedia.org/wiki/Special:FilePath/Bhaderwah_Fort.jpg,N/A
@@ -832,8 +832,7 @@ Jammu and Kashmir,Ganderbal,Naranag Temple Ruins,34.3000,74.9800,"An incredibly 
 Jammu and Kashmir,Jammu,Bahu Fort,32.7200,74.8700,"An ancient, robust fortress situated on the banks of the Tawi River, housing a famous Kali temple.",https://commons.wikimedia.org/wiki/Special:FilePath/Bahu_Fort_Jammu.jpg,N/A
 Jammu and Kashmir,Kathua,Jasrota Fort,32.4500,75.4000,"A ruined fort and palace complex built by the Jasrotia Rajputs, located on the banks of the Ujh River.",https://commons.wikimedia.org/wiki/Special:FilePath/Jasrota_Fort.jpg,N/A
 Jammu and Kashmir,Kishtwar,Kishtwar Fort,33.3100,75.7600,"Ruins of an old fort situated near the Chowgan, built to protect the Kishtwar kingdom.",https://commons.wikimedia.org/wiki/Special:FilePath/Kishtwar_Fort.jpg,N/A
-Jammu and Kashmir,Kulgam,No major monument,33.6400,75.0100,"An agricultural district known for its natural springs; lacks major historical built heritage.",N/A,N/A
-Jammu and Kashmir,Kupwara,No major monument,34.5200,74.2500,"A highly scenic and strategic border district without formally classified major monuments.",N/A,N/A
+
 Jammu and Kashmir,Poonch,Poonch Fort,33.7700,74.0900,"A majestic 18th-century fort that has witnessed the reign of the Dogras, Sikhs, and local Muslim rulers.",https://commons.wikimedia.org/wiki/Special:FilePath/Poonch_Fort.jpg,N/A
 Jammu and Kashmir,Pulwama,Awantipora Ruins,33.9200,75.0100,"Spectacular 9th-century ruins of twin Hindu temples built by King Awantivarman of the Utpala dynasty.",https://commons.wikimedia.org/wiki/Special:FilePath/Awantipora_Ruins.jpg,N/A
 Jammu and Kashmir,Rajouri,Dhanidhar Fort,33.3800,74.3000,"A 19th-century fort built by Mian Hathu on a hillock overlooking the Rajouri town.",https://commons.wikimedia.org/wiki/Special:FilePath/Dhanidhar_Fort.jpg,N/A
@@ -846,25 +845,23 @@ Jammu and Kashmir,Udhampur,Krimchi Temples,32.9600,75.1200,"A complex of 11th-ce
 Ladakh,Kargil,Mulbekh Maitreya,34.3800,76.3800,"An enormous 9-meter tall rock-carved statue of the Maitreya Buddha dating back to the 8th century.",https://commons.wikimedia.org/wiki/Special:FilePath/Mulbekh_Maitreya.jpg,N/A
 Ladakh,Leh,Leh Palace,34.1600,77.5800,"A towering 17th-century former royal palace modeled after the Potala Palace in Tibet, overlooking the city of Leh.",https://commons.wikimedia.org/wiki/Special:FilePath/Leh_Palace.jpg,N/A
 Delhi,Central Delhi,Red Fort,28.6562,77.2410,"A UNESCO World Heritage site and the primary residence of the Mughal Emperors for nearly 200 years.",https://commons.wikimedia.org/wiki/Special:FilePath/Red_Fort_Delhi.jpg,https://sketchfab.com/3d-models/red-fort-delhi
-Delhi,East Delhi,No major monument,28.6200,77.3000,"A highly urbanized modern district lacking major classified ancient monuments.",N/A,N/A
+
 Delhi,New Delhi,Humayun's Tomb,28.5933,77.2507,"The magnificent 16th-century tomb that inspired the Taj Mahal, featuring perfect Mughal proportions.",https://commons.wikimedia.org/wiki/Special:FilePath/Humayuns_Tomb.jpg,N/A
 Delhi,North Delhi,Mutiny Memorial,28.6600,77.2100,"A Gothic-style red sandstone tower built by the British to commemorate soldiers lost during the 1857 Rebellion.",https://commons.wikimedia.org/wiki/Special:FilePath/Mutiny_Memorial_Delhi.jpg,N/A
-Delhi,North East Delhi,No major monument,28.7100,77.2700,"A densely populated residential district lacking major ancient monuments.",N/A,N/A
-Delhi,North West Delhi,No major monument,28.7300,77.1400,"A primarily residential and industrial area.",N/A,N/A
-Delhi,Shahdara,No major monument,28.6800,77.2900,"One of the oldest localities in Delhi, but lacks a singular classified major historical monument.",N/A,N/A
+
+
 Delhi,South Delhi,Qutub Minar,28.5245,77.1855,"A towering 73-meter victory minaret built in 1192, a masterpiece of Indo-Islamic Afghan architecture.",https://commons.wikimedia.org/wiki/Special:FilePath/Qutub_Minar_Delhi.jpg,N/A
 Delhi,South East Delhi,Tughlaqabad Fort,28.5100,77.2600,"A massive, ruined stone fortress built in 1321 by Ghiyas-ud-din Tughlaq, spanning over 6 km.",https://commons.wikimedia.org/wiki/Special:FilePath/Tughlaqabad_Fort.jpg,N/A
-Delhi,South West Delhi,No major monument,28.5800,77.0500,"Known for the airport and diplomatic enclaves; lacks major distinct archaeological monuments.",N/A,N/A
+
 Delhi,West Delhi,Hastsal Minar,28.6300,77.0600,"A lesser-known 17th-century hunting lodge and mini-minaret built by Mughal Emperor Shah Jahan.",https://commons.wikimedia.org/wiki/Special:FilePath/Hastsal_Minar.jpg,N/A
 Chandigarh,Chandigarh,Capitol Complex,30.7600,76.8000,"A UNESCO World Heritage site featuring the modernist architectural marvels designed by Le Corbusier.",https://commons.wikimedia.org/wiki/Special:FilePath/Capitol_Complex_Chandigarh.jpg,N/A
-Andaman and Nicobar Islands,Nicobar,No major monument,7.0000,93.8000,"Deeply forested indigenous islands lacking major built heritage.",N/A,N/A
-Andaman and Nicobar Islands,North and Middle Andaman,No major monument,12.5000,92.8000,"Known for beaches and limestone caves (natural heritage).",N/A,N/A
+
 Andaman and Nicobar Islands,South Andaman,Cellular Jail,11.6700,92.7400,"A historic colonial prison in Port Blair where Indian political prisoners were exiled during the struggle for independence.",https://commons.wikimedia.org/wiki/Special:FilePath/Cellular_Jail_Port_Blair.jpg,N/A
 Lakshadweep,Lakshadweep,Ujra Mosque,10.5600,72.6300,"A 17th-century beautifully carved wooden mosque situated on Kavaratti Island.",https://commons.wikimedia.org/wiki/Special:FilePath/Ujra_Mosque_Kavaratti.jpg,N/A
 Puducherry,Karaikal,Karaikal Ammaiyar Temple,10.9200,79.8300,"A historic temple dedicated to a female Nayanar saint, uniquely blending Chola and French architectural influences.",https://commons.wikimedia.org/wiki/Special:FilePath/Karaikal_Ammaiyar_Temple.jpg,N/A
-Puducherry,Mahe,No major monument,11.7000,75.5300,"A small colonial French outpost on the Kerala coast lacking a massive singular monument.",N/A,N/A
+
 Puducherry,Puducherry,Arikamedu Archaeological Site,11.8800,79.8200,"The ruins of an ancient Roman trade center dating back to the 2nd century BCE.",https://commons.wikimedia.org/wiki/Special:FilePath/Arikamedu_Ruins.jpg,N/A
 Puducherry,Yanam,French Cemetery Yanam,16.7300,82.2100,"A historic cemetery featuring elaborate obelisks and graves of French administrators from the 18th century.",https://commons.wikimedia.org/wiki/Special:FilePath/French_Cemetery_Yanam.jpg,N/A
-Dadra and Nagar Haveli and Daman and Diu,Dadra and Nagar Haveli,No major monument,20.2700,73.0100,"Known for the Vanganga Lake Garden; lacks major ancient architectural monuments.",N/A,N/A
+
 Dadra and Nagar Haveli and Daman and Diu,Daman,Moti Daman Fort,20.4100,72.8300,"A massive 16th-century colonial fort built by the Portuguese to guard their settlement.",https://commons.wikimedia.org/wiki/Special:FilePath/Moti_Daman_Fort.jpg,N/A
 Dadra and Nagar Haveli and Daman and Diu,Diu,Diu Fort,20.7100,70.9900,"A heavily fortified 16th-century Portuguese castle located strategically at the mouth of the Gulf of Khambhat.",https://commons.wikimedia.org/wiki/Special:FilePath/Diu_Fort.jpg,N/A
