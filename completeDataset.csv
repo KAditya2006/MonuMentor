@@ -723,7 +723,90 @@ Sikkim,Gangtok,Rumtek Monastery,27.3000,88.5200,"The magnificent 16th-century se
 Sikkim,Gyalshing,Pemayangtse Monastery,27.3000,88.2400,"One of the oldest and premier monasteries of Sikkim, founded in 1705, offering views of Mount Kanchenjunga.",https://commons.wikimedia.org/wiki/Special:FilePath/Pemayangtse_Monastery.jpg,N/A
 
 Sikkim,Namchi,Char Dham Namchi,27.1600,88.3500,"A modern, massive pilgrimage complex featuring an 87-foot statue of Lord Shiva on Solophok Hill.",https://commons.wikimedia.org/wiki/Special:FilePath/Char_Dham_Namchi.jpg,N/A
-
+Assam,Baksa,Manas Soushi Khongkhor,26.6900,91.5900,"An ancient, traditional Bodo eco-cultural heritage site containing historical tribal shrines and structural remnants.",N/A,N/A
+Assam,Bajali,Parihareswar Devalaya,26.5000,91.1900,"An incredibly ancient Shiva temple in Dubi, historically patronized by the Ahom Kings and famous for its Devadasi dance heritage.",https://commons.wikimedia.org/wiki/Special:FilePath/Parihareswar_Devalaya.jpg,N/A
+Assam,Chirang,Kalamati Hanuman Temple,26.6500,90.5600,"A historic and deeply revered shrine situated near the Bhutan border, drawing pilgrims from across the state.",N/A,N/A
+Assam,Darrang,Khatara Satra,26.4300,92.0300,"One of the oldest Vaishnavite monasteries (Satras) in Assam, established in the 16th century by Diphalu Goswami.",N/A,N/A
+Assam,Dhemaji,Ghuguha Dol,27.4800,94.5800,"A magnificent historical temple built in the 18th century by Ahom Queen Kuranganayani in memory of sage Bamuni.",N/A,N/A
+Assam,Dibrugarh,Raidongia Doul,27.4700,94.9000,"An ancient 18th-century brick temple built by Swargadeo Pramatta Singha, featuring 14 intact original statues.",https://commons.wikimedia.org/wiki/Special:FilePath/Raidongia_Doul.jpg,N/A
+Assam,Hailakandi,Siddheshwar Shiva Temple,24.8600,92.5600,"A centuries-old, highly significant Shiva temple located at Badarpur Ghat on the banks of the Barak River.",N/A,N/A
+Assam,Karbi Anglong,Deopahar Ruins,26.0100,93.4400,"A spectacular archaeological site featuring the scattered stone ruins of an ancient 9th-century Shiva temple.",https://commons.wikimedia.org/wiki/Special:FilePath/Deopahar_Ruins.jpg,N/A
+Assam,Kokrajhar,Mahamaya Dham,26.4000,90.2600,"One of the greatest Shakti Peethas in Lower Assam, boasting a centuries-old history of tribal and Hindu worship.",N/A,N/A
+Assam,Lakhimpur,Basudev Than,27.2300,94.1000,"A prominent 17th-century Vaishnavite temple complex built by the Chutiya kings, famous for its historic silk weaves.",N/A,N/A
+Assam,Morigaon,Sita Jakhala,26.2500,92.3300,"An ancient archaeological site featuring stone-cut steps on a hill, believed to have been carved by sage Valmiki.",N/A,N/A
+Assam,Tamulpur,Gopeswar Temple,26.6300,91.5600,"A highly revered historical Shiva temple tucked away near the Bhutan border, featuring an ancient sacred pond.",N/A,N/A
+Assam,Udalguri,Bhairabkunda Shiva Mandir,26.7400,92.0900,"An ancient rock-cut temple and historic pilgrimage site located perfectly at the tri-junction of Bhutan, Assam, and Arunachal.",N/A,N/A
+Assam,West Karbi Anglong,Amreng Ruins,25.9600,92.8300,"Historic remnants of ancient Karbi tribal fortifications and stone altars hidden deep within the forested hills.",N/A,N/A
+Meghalaya,East Garo Hills,Rongrenggiri Fort Ruins,25.6100,90.6200,"The historic battleground and ruined fort where the Garo warriors made their final, fierce stand against the British.",N/A,N/A
+Meghalaya,East Jaintia Hills,Syndai Bathing Ghat,25.3500,92.3600,"A magnificent ancient structural bathing pool and elephant carving carved out of solid rock by the Jaintia Kings.",N/A,N/A
+Meghalaya,Eastern West Khasi Hills,Nongstoin Monoliths,25.5500,91.6000,"Ancient clusters of massive megalithic stones erected by early Khasi tribes to commemorate legendary chieftains.",N/A,N/A
+Meghalaya,North Garo Hills,Rajasimla Historic Church,25.8600,90.6800,"The structural site of the very first Garo church, deeply significant to the historical spread of Christianity in the region.",N/A,N/A
+Meghalaya,Ri Bhoi,Lum Sohpetbneng,25.9000,91.8800,"The 'Navel of the Earth', an incredibly sacred, ancient structural altar central to the indigenous Khasi religion.",N/A,N/A
+Meghalaya,South Garo Hills,Balpakram Monoliths,25.2600,90.6300,"A mystical plateau housing ancient tribal shrines, megaliths, and deeply revered spiritual structural markers.",N/A,N/A
+Meghalaya,South West Garo Hills,Ampati British Bungalow,25.4600,89.9200,"A preserved 19th-century colonial bungalow showcasing the architectural footprint of the British Raj in the Garo hills.",N/A,N/A
+Meghalaya,South West Khasi Hills,Mawkyrwat Monoliths,25.3200,91.2400,"A massive, largely unexplored site of ancient megalithic stones and historic tribal assembly structures.",N/A,N/A
+Meghalaya,West Garo Hills,Tura Baptist Church,25.5200,90.2200,"An imposing and historically significant 19th-century church representing the oldest Christian architecture in the Garo Hills.",N/A,N/A
+Meghalaya,West Khasi Hills,Nongstoin Royal Palace,25.5200,91.2600,"The historic wooden and stone residence of the Syiem (King) of Nongstoin, preserving traditional Khasi royal architecture.",N/A,N/A
+Tripura,Dhalai,Longtharai Mandir,23.8800,91.9000,"An ancient, deeply revered hilltop shrine dedicated to Lord Shiva, heavily patronized by the indigenous Tripuri tribes.",N/A,N/A
+Tripura,Khowai,Baramura Historic Shrines,23.9700,91.6000,"A collection of ancient, terracotta-adorned tribal shrines hidden within the lush Baramura hill ranges.",N/A,N/A
+Tripura,North Tripura,Bhavatarini Mandir,24.3200,92.1600,"A beautiful and highly significant 20th-century Hindu temple in Dharmanagar, dedicated to Goddess Kali.",N/A,N/A
+Mizoram,Hnahthial,Lungvandawt Pillar,22.9600,92.9300,"An incredibly ancient, massive carved stone monolith that local folklore claims once reached up to heaven.",N/A,N/A
+Mizoram,Khawzawl,Kawtchhuah Ropui,23.5300,93.1800,"A mesmerizing archaeological site featuring massive, ancient megalithic stone pillars carved with mysterious warrior figures.",https://commons.wikimedia.org/wiki/Special:FilePath/Kawtchhuah_Ropui.jpg,N/A
+Mizoram,Kolasib,Tlawng River British Bridge,24.2200,92.6700,"The ruined structural remains of colonial-era British engineering spanning the treacherous Tlawng river.",N/A,N/A
+Mizoram,Lawngtlai,Phawngpui Tribal Altars,22.5200,92.8900,"Ancient structural altars and megalithic stones located on the 'Blue Mountain', deeply sacred to the Lai people.",N/A,N/A
+Mizoram,Lunglei,Thangliana Lung Memorial,22.8800,92.7300,"A historic stone memorial dedicated to Captain T.H. Lewin, a British officer who integrated deeply with Mizo tribes.",N/A,N/A
+Mizoram,Mamit,Dampa Historic Shrines,23.9200,92.4800,"Ancient, moss-covered tribal animist shrines hidden deep within the sprawling Dampa Tiger Reserve.",N/A,N/A
+Mizoram,Saitual,Tualchang Monoliths,23.6800,92.9600,"The largest monoliths in Mizoram, a line of massive ancient stone slabs marking the burial site of legendary tribal chiefs.",N/A,N/A
+Mizoram,Siaha,Mount Mawma Church,22.4800,92.9700,"A historic, century-old timber church perched high in the mountains, central to the Mara tribal community.",N/A,N/A
+Mizoram,Serchhip,Chhingpuii Thlan,23.3000,92.8400,"A historic and deeply tragic stone memorial built in the 19th century in memory of a legendary beautiful Mizo woman.",N/A,N/A
+Nagaland,Chümoukedima,Old Village Gateways,25.8100,93.7700,"Massive, intricately carved ancient wooden gateways that historically protected the Chümoukedima village from invaders.",N/A,N/A
+Nagaland,Longleng,Phom Log Drums,26.4700,94.8100,"Colossal, ancient hollowed-out wooden log drums housed in massive structural Morungs (traditional dormitories).",N/A,N/A
+Nagaland,Kiphire,Mimi Cave Fortifications,25.9000,94.7800,"Ancient natural caves that were structurally modified by early Naga tribes into impregnable defensive fortresses.",N/A,N/A
+Nagaland,Niuland,Kachari Ruins Extension,25.9100,93.9800,"Scattered, mysterious mushroom-shaped stone pillars belonging to the ancient 10th-century Kachari civilization.",N/A,N/A
+Nagaland,Noklak,Wui Village Iron Smelters,26.1900,94.9900,"Historic, ancient structural furnaces and blacksmithing sites where the Khiamniungan tribe forged their legendary weapons.",N/A,N/A
+Nagaland,Peren,Benreu Morungs,25.5100,93.7300,"Exceptionally well-preserved, centuries-old traditional Zeliangrong Naga wooden youth dormitories decorated with animal skulls.",N/A,N/A
+Nagaland,Phek,Khezhakeno Sacred Stone,25.6900,94.4600,"A legendary ancient flat stone (Tso Tawo) that early Naga tribes believed magically multiplied the grain laid upon it.",N/A,N/A
+Nagaland,Shamator,Yimkhiung Monoliths,26.1000,94.8700,"A highly significant collection of ancient megalithic stones erected to celebrate the headhunting victories of the Yimkhiung tribe.",N/A,N/A
+Nagaland,Tseminyu,Rengma Monoliths,25.9400,94.2600,"Massive prehistoric stone pillars erected by the Rengma Nagas to honor feasts of merit and legendary ancestors.",N/A,N/A
+Nagaland,Tuensang,Changsangmonko Structures,26.2700,94.8300,"The ancient, structural foundation site believed to be the mythical birthplace of the Chang Naga tribe.",N/A,N/A
+Nagaland,Wokha,Mount Tiyi Shrines,26.1000,94.2500,"Ancient, deeply revered structural altars on a mountain believed by the Lotha Nagas to be the resting place of departed souls.",N/A,N/A
+Nagaland,Zunheboto,Sumi Naga Morungs,25.9600,94.5200,"Historic, elaborately carved traditional fortresses and dormitories representing the martial heritage of the Sumi Nagas.",N/A,N/A
+Arunachal Pradesh,Anjaw,Walong War Memorial,27.9200,96.8400,"A deeply moving structural monument honoring the incredible bravery of Indian soldiers during the 1962 Sino-Indian War.",https://commons.wikimedia.org/wiki/Special:FilePath/Walong_War_Memorial.jpg,N/A
+Arunachal Pradesh,Changlang,Jairampur WWII Cemetery,27.1300,95.7300,"A massive, recently unearthed historic cemetery containing the graves of over 1,000 Allied soldiers from World War II.",N/A,N/A
+Arunachal Pradesh,Dibang Valley,Kronli Tribal Ruins,28.8000,95.9500,"Ancient structural remnants of early Idu Mishmi tribal settlements hidden in the deep, remote Himalayan valleys.",N/A,N/A
+Arunachal Pradesh,East Kameng,Gyawepur Fort,27.3100,93.0000,"A ruined historic military fort that once guarded the crucial Himalayan trade routes to Tibet.",N/A,N/A
+Arunachal Pradesh,East Siang,Kekar Monying Fort,28.0600,95.3200,"A legendary rock-cliff fort where the Adi tribes famously mounted a fierce resistance against the British in 1911.",N/A,N/A
+Arunachal Pradesh,Kamle,Raga Tribal Altars,27.8100,94.1300,"Ancient, elaborate structural bamboo and stone altars erected by the Nyishi tribe for traditional Donyi-Polo worship.",N/A,N/A
+Arunachal Pradesh,Kra Daadi,Palin Historic Church,27.7600,93.4200,"One of the oldest and most architecturally significant timber churches in the deeply remote Nyishi tribal region.",N/A,N/A
+Arunachal Pradesh,Kurung Kumey,Koloriang Suspension Bridge,27.9000,93.2200,"A terrifyingly high, historic structural cane-and-wood suspension bridge built by indigenous tribes centuries ago.",N/A,N/A
+Arunachal Pradesh,Lepa Rada,Basar Stone Structures,27.9700,94.6800,"Ancient megalithic arrangements and historical boundary markers erected by the Galo tribe.",N/A,N/A
+Arunachal Pradesh,Lohit,Tezu Gompa,27.8800,96.3500,"A spectacular Tibetan Buddhist monastery built by refugees, featuring highly ornate architecture and a golden Buddha.",N/A,N/A
+Arunachal Pradesh,Longding,Wancho Morungs,26.9000,95.2600,"Magnificent, ancient traditional dormitories featuring spectacular, intricate wood carvings of warriors and skulls.",N/A,N/A
+Arunachal Pradesh,Lower Siang,Malinithan Ruins,27.8500,94.8300,"An incredibly significant 14th-century archaeological site featuring the intricately carved stone ruins of an ancient Hindu temple.",https://commons.wikimedia.org/wiki/Special:FilePath/Malinithan_Temple_Ruins.jpg,N/A
+Arunachal Pradesh,Lower Subansiri,Ziro Apatani Lapangs,27.5600,93.8100,"Massive, ancient wooden structural platforms that serve as the historic socio-cultural centerpieces of Apatani villages.",N/A,N/A
+Arunachal Pradesh,Namsai,Chongkham Pagoda,27.6600,95.8800,"An ornate, historic Tai-Khamti Buddhist pagoda featuring stunning Burmese-style architecture.",N/A,N/A
+Arunachal Pradesh,Pakke Kessang,Seijosa Historic Sites,27.1400,93.0000,"Historic tribal administrative outposts from the early NEFA (North-East Frontier Agency) era.",N/A,N/A
+Arunachal Pradesh,Shi Yomi,Samten Yongcha Monastery,28.5300,94.1800,"A breathtaking, 400-year-old Mahayana Buddhist monastery perched on a hilltop in the remote Mechuka valley.",N/A,N/A
+Arunachal Pradesh,Siang,Pangin British Bridge,28.1800,94.8800,"The structural remains of an ambitious early 20th-century suspension bridge constructed by the British over the Siang river.",N/A,N/A
+Arunachal Pradesh,Tirap,Nocte Chief's Palace,27.0100,95.5300,"The grand, historic wooden structural residence of the supreme chief of the Nocte tribe in Khonsa.",N/A,N/A
+Arunachal Pradesh,Upper Siang,Tuting Gompa,28.6200,94.9100,"An imposing, vividly painted ancient Tibetan Buddhist monastery located just miles from the Chinese border.",N/A,N/A
+Arunachal Pradesh,Upper Subansiri,Mengu Ancient Bridge,28.1300,94.1500,"A marvel of ancient tribal engineering, a massive historic bridge woven entirely from local cane and bamboo.",N/A,N/A
+Arunachal Pradesh,West Siang,Akashi Ganga Temple,28.2000,94.6900,"A highly sacred structural temple built around a natural waterfall, believed to be the site of a mythological Hindu event.",N/A,N/A
+Manipur,Chandel,Chandel Historic Church,24.3200,94.0000,"A beautiful, historic masonry church representing the deep Christian architectural footprint in the Naga borderlands.",N/A,N/A
+Manipur,Churachandpur,Tribal Martyrs' Memorial,24.3300,93.6700,"A deeply significant structural monument and park commemorating the indigenous leaders of the Kuki-Zomi tribes.",N/A,N/A
+Manipur,Jiribam,Jiri River Bridge,24.7900,93.1100,"A historic, colonial-era suspension bridge that served as the primary trade gateway between Manipur and Assam.",N/A,N/A
+Manipur,Kakching,Kakching Garden Temples,24.4800,93.9700,"A complex of intricately built modern and historic temples situated on a hillock, featuring distinct Meitei architecture.",N/A,N/A
+Manipur,Kamjong,Khangkhui WWII Bunkers,24.8800,94.3400,"Ancient natural limestone caves that were structurally fortified into massive command bunkers by the Japanese during WWII.",N/A,N/A
+Manipur,Kangpokpi,Mt. Koubru Shiva Temple,25.1400,93.9700,"A deeply revered, ancient structural shrine perched atop one of the highest peaks in Manipur.",N/A,N/A
+Manipur,Noney,Tupul WWII Sites,24.8100,93.6200,"Historic structural remnants, trenches, and defensive positions from a fierce WWII battle between the British and Japanese.",N/A,N/A
+Manipur,Pherzawl,Tipaimukh British Outpost,24.2600,93.1800,"The ruined structural remains of a strategic 19th-century colonial outpost located at the confluence of two massive rivers.",N/A,N/A
+Manipur,Senapati,Makhel Monoliths,25.2600,94.0200,"A legendary heritage site featuring ancient megaliths and a sacred tree, believed to be the dispersal point of all Naga tribes.",N/A,N/A
+Manipur,Tamenglong,Tharon Cave Carvings,24.9800,93.4900,"Ancient, 2000-year-old rock-cut carvings and structural modifications made by the indigenous Hobinian culture.",N/A,N/A
+Manipur,Tengnoupal,Tengnoupal WWII Battle Sites,24.3300,94.1300,"The highest point on the Indo-Myanmar road, featuring structural scars, bunkers, and memorials from the 1944 Japanese invasion.",N/A,N/A
+Manipur,Ukhrul,Nillai Estate Bungalows,25.1100,94.3600,"Historic, colonial-style wooden bungalows built in the 20th century, surrounded by one of the oldest tea estates in the state.",N/A,N/A
+Sikkim,Pakyong,Dikling Mane-Lhakhang,27.2300,88.5900,"A spectacular, ancient Buddhist shrine known for its massive prayer wheels and classic Sikkimese timber architecture.",N/A,N/A
+Sikkim,Soreng,Soreng Monastery,27.1700,88.2000,"A historic, brightly painted Nyingma Buddhist monastery that serves as the spiritual heart of the local Lepcha community.",N/A,N/A
+Sikkim,Mangan,Phodong Monastery,27.5000,88.5300,"A breathtakingly beautiful, 18th-century Kagyu monastery rebuilt multiple times, famous for its ancient murals and frescoes.",https://commons.wikimedia.org/wiki/Special:FilePath/Phodong_Monastery.jpg,N/A
 
 
 
